@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
     // the final bullet speed between the bullet and the target
     float finalSpeed;
 
+    public int damage {set; get;}
+
     // is target locked?
     // if so the bullet won't update its target enemy
     public bool lockedTarget { set; get; }
@@ -31,7 +33,7 @@ public class Bullet : MonoBehaviour
         {
             lockedTarget = true;
             //transform.LookAt(closest.transform.position);
-            transform.position = Vector3.MoveTowards(transform.position, closest.transform.position, finalSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, closest.transform.position, Time.deltaTime * speed);
         }
         else Destroy(gameObject);
     }
@@ -81,6 +83,10 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log("hit: " + collision);
-        Destroy(gameObject);
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<Enemy>().DealDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }
