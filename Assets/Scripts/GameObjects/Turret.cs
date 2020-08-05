@@ -48,14 +48,17 @@ public class Turret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount != 0)
-        {
-            EnableDisableRange();
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            EnableDisableRange();
-        }
+        //if (Input.touchCount == 1)
+        //{
+        //    if (Input.GetTouch(0).phase == TouchPhase.Began)
+        //    {
+        //        EnableDisableRange();
+        //    }
+        //}
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    EnableDisableRange();
+        //}
 
         if (lockedTarget != null)
         {
@@ -75,14 +78,18 @@ public class Turret : MonoBehaviour
         }
     }
 
-    IEnumerator EnableDisableRange()
+    private void OnMouseDown()
+    {
+        EnableDisableRange();
+    }
+
+    void EnableDisableRange()
     {
         SpriteRenderer rangeSprite = range.GetComponent<SpriteRenderer>();
         if (rangeSprite.enabled)
             rangeSprite.enabled = false;
         else
             rangeSprite.enabled = true;
-        yield return new WaitForSeconds(1.5f);
     }
 
     /// <summary>
@@ -92,35 +99,45 @@ public class Turret : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Shoot(GameObject enemy)
     {
+        // shoot only if the turret has acquire a target
+        // and only if the target equals to the locked one
         while (lockedTarget != null && lockedTarget.Equals(enemy))
         {
-
+            // spawn bullet
             GameObject bullet = Instantiate(bulletPrefab, gameObject.transform.position, Quaternion.identity);
             // get script
             Bullet bulletScript = bullet.GetComponent<Bullet>();
-            //bulletScript.SetTarget(enemy);
+            
+            // assign target to the bullet
             bulletScript.lockedTarget = true;
             bulletScript.closest = enemy;
-            bulletScript.damage = damage;// set bullet damage based on turret
+            bulletScript.damage = damage;// set bullet damage based on turret specs
 
-            bullet.SetActive(true);
-            Vector3 animationSpawn = gameObject.transform.position;
+            bullet.SetActive(true);// show bullet
 
+            // show shoot animation of the turret
             GameObject shootExplosion = Instantiate(shootAnimation, shootAnimation.transform.position, Quaternion.identity);
             shootExplosion.SetActive(true);
 
+            // get its particle system which actually holds the particle stuff
             ParticleSystem animation = shootExplosion.GetComponentInChildren<ParticleSystem>();
 
+            // calculate the animation duration
             float animationDuration = animation.main.duration + animation.main.startLifetime.constant;
 
-            shootExplosion.GetComponentInChildren<ParticleSystem>().Play();
+            // start the animation
+            animation.Play();
 
+            // destroy it after the animation finished
             Destroy(shootExplosion, animationDuration);
 
+            // if the locked target died or existed the range locked target will be set to null
+            // stop this coroutine for optimization reasons
             if (lockedTarget == null)// stop coroutine
                 yield break;
 
-
+            // wait before shooting again
+            // fireRate is a turret variable in seconds
             yield return new WaitForSeconds(fireRate);
         }
     }
@@ -134,15 +151,13 @@ public class Turret : MonoBehaviour
     //}
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //Debug.Log(collision.tag);
         // if the collision is an enemy then shoot
         if (!collision.gameObject.CompareTag("Bullet") && !collision.gameObject.CompareTag("Turret"))
         {
-            //Debug.Log(collision.gameObject);
-
-            //inRange.Add(collision.gameObject);
+            // if turret has no locked any enemy
             if (lockedTarget == null)
             {
+                // acquire target
                 lockedTarget = collision.gameObject;
                 // shot only if enemy is locked
                 StartCoroutine(Shoot(collision.gameObject));
@@ -158,6 +173,7 @@ public class Turret : MonoBehaviour
         //    //Debug.Log("Removed: " + collision.gameObject);
         //    inRange.Remove(collision.gameObject);
         //}
+
         // target got out of the range, remove target
         if (lockedTarget.Equals(collision.gameObject))
             lockedTarget = null;

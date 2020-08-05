@@ -11,6 +11,10 @@ public class GridHandler : MonoBehaviour
 
     private Vector2 touchPos;
 
+    public LayerMask allTilesLayer;
+
+    private Grid grid;
+
     private void Update()
     {
         //touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -19,7 +23,13 @@ public class GridHandler : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(finalObject, transform.position, Quaternion.identity);
+            Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+            RaycastHit2D rayHit = Physics2D.Raycast(mouseRay, Vector2.zero, Mathf.Infinity, allTilesLayer);
+
+            if (rayHit.collider == null)
+            {
+                Instantiate(finalObject, transform.position, Quaternion.identity);
+            }
         }
     }
 }
