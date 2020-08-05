@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8657777607199562136}
   - component: {fileID: 8657777607199562137}
   - component: {fileID: 8657777607199562141}
+  - component: {fileID: 947753948}
   m_Layer: 11
   m_Name: Turret
   m_TagString: Turret
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8657777607199562118}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.914, y: -1.655, z: 0}
-  m_LocalScale: {x: 0.22316524, y: 0.22316524, z: 0.22316524}
+  m_LocalScale: {x: 0.2069947, y: 0.2069947, z: 0.2069947}
   m_Children:
   - {fileID: 6740404349138592117}
   - {fileID: 2404372486819487326}
@@ -121,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369e626a6a762914aa9782b820f8f156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 1
   fireRate: 0.2
   fireRange: 1
   bulletPrefab: {fileID: 6447068709141545872, guid: 9df680e823dc06e45bcc13878245ed6a, type: 3}
@@ -142,6 +143,22 @@ CircleCollider2D:
   m_Offset: {x: -0.0021689238, y: 0}
   serializedVersion: 2
   m_Radius: 5.432209
+--- !u!114 &947753948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657777607199562118}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e175bf83a7c90a4db6e083aacf07dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalObject: {fileID: 8657777607199562118}
+  allTilesLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &4877712062221584466
 PrefabInstance:
   m_ObjectHideFlags: 0

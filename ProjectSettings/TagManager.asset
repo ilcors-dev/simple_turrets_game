@@ -11,6 +11,7 @@ TagManager:
   - HealthBar
   - Bullet
   - Turret
+  - TilesHolder
   layers:
   - Default
   - TransparentFX
