@@ -11,6 +11,11 @@ public class LevelManager : Singleton<LevelManager>
     private Transform map;
 
     /// <summary>
+    /// These variables hold the up, down, left, right position of camera borders
+    /// </summary>
+    private float XLeftBoundPos, XRightBoundPos, YHighBoundPos, YLowBoundPos;
+
+    /// <summary>
     /// Dictionary containing the tiles
     /// </summary>
     public Dictionary<Point, TileScript> Tiles { get; set; }
@@ -30,13 +35,57 @@ public class LevelManager : Singleton<LevelManager>
     // Start is called before the first frame update
     void Start()
     {
+        CalculateScreenBounds();
         CreateLevel();
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Gets screen borders positions and saves them into class variables
+    /// </summary>
+    private void CalculateScreenBounds()
     {
+        float screenAspect = (float)Screen.width / (float)Screen.height;
+        float cameraHeight = Camera.main.orthographicSize * 2;
 
+        // get camera bounds
+        Bounds bounds = new Bounds(
+            Camera.main.transform.position,
+            new Vector3(cameraHeight * screenAspect, cameraHeight, 0));
+
+        // check if point where the gameobject would get instantiated is out of screen
+
+        /**
+         * x bounds
+         *     |    |
+         *  -> |    | <-
+         *     |    |
+         */
+        XLeftBoundPos = bounds.extents.x - bounds.size.x;// left
+        XRightBoundPos = bounds.extents.x;// right
+
+        /** 
+         * y bounds ->
+         * -----
+         * 
+         * 
+         * -----
+         */
+        YHighBoundPos = bounds.extents.y; // up
+        YLowBoundPos = bounds.extents.y - bounds.size.y; // down
+    }
+
+    /// <summary>
+    /// Check if the x and y value are in the camera viewport or not
+    /// </summary>
+    /// <param name="x">x point world space</param>
+    /// <param name="y">y point world space</param>
+    /// <returns></returns>
+    private bool IsOutOfScreen(float x, float y)
+    {
+        if (x < XLeftBoundPos || x > XRightBoundPos || y < YLowBoundPos || y > YHighBoundPos)
+            return true;
+
+        return false;
     }
 
     /// <summary>
@@ -65,7 +114,8 @@ public class LevelManager : Singleton<LevelManager>
 
             for (int x = 0; x < mapX; x++)
             {
-                PlaceTile(newTiles[x].ToString(), x, y, worldStart);
+                if (!IsOutOfScreen(worldStart.x + (TileSizeX * x), worldStart.y - (TileSizeX * y)))
+                    PlaceTile(newTiles[x].ToString(), x, y, worldStart);
             }
         }
     }
