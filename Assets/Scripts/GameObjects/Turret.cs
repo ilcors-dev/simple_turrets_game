@@ -33,7 +33,7 @@ public class Turret : MonoBehaviour
     //public HashSet<GameObject> inRange;
 
     // shoot only at the locked target
-    GameObject lockedTarget;
+    public GameObject lockedTarget { get; set; }
 
     public GameObject shootAnimation;
 
@@ -48,18 +48,6 @@ public class Turret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.touchCount == 1)
-        //{
-        //    if (Input.GetTouch(0).phase == TouchPhase.Began)
-        //    {
-        //        EnableDisableRange();
-        //    }
-        //}
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    EnableDisableRange();
-        //}
-
         if (lockedTarget != null)
         {
             ////find the vector pointing from our position to the target
@@ -78,10 +66,10 @@ public class Turret : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
-    {
-        EnableDisableRange();
-    }
+    //private void OnMouseDown()
+    //{
+    //    EnableDisableRange();
+    //}
 
     void EnableDisableRange()
     {
@@ -97,14 +85,14 @@ public class Turret : MonoBehaviour
     /// </summary>
     /// <param name="enemy">GameObject</param>
     /// <returns></returns>
-    private IEnumerator Shoot(GameObject enemy)
+    public IEnumerator Shoot(GameObject enemy)
     {
         // shoot only if the turret has acquire a target
         // and only if the target equals to the locked one
         while (lockedTarget != null && lockedTarget.Equals(enemy))
         {
             // spawn bullet
-            GameObject bullet = Instantiate(bulletPrefab, gameObject.transform.position, Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.transform.position.z), Quaternion.identity);
             // get script
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             
@@ -116,7 +104,8 @@ public class Turret : MonoBehaviour
             bullet.SetActive(true);// show bullet
 
             // show shoot animation of the turret
-            GameObject shootExplosion = Instantiate(shootAnimation, shootAnimation.transform.position, Quaternion.identity);
+            GameObject shootExplosion = Instantiate(shootAnimation, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, -5f), Quaternion.identity);
+            //shootExplosion.transform.LookAt(enemy.transform);
             shootExplosion.SetActive(true);
 
             // get its particle system which actually holds the particle stuff
@@ -149,6 +138,7 @@ public class Turret : MonoBehaviour
     //        Debug.Log(o);
     //    }
     //}
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         // if the collision is an enemy then shoot
@@ -175,7 +165,7 @@ public class Turret : MonoBehaviour
         //}
 
         // target got out of the range, remove target
-        if (lockedTarget.Equals(collision.gameObject))
+        if (lockedTarget != null && lockedTarget.Equals(collision.gameObject))
             lockedTarget = null;
     }
 }
