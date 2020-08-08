@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : Singleton<EnemySpawner>
 {
     public GameObject toSpawn;
     public float spawnEvery;
+
+    public Vector3 spawnPosition { get;  set; }
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(DelaySpawn());
     }
 
     // Update is called once per frame
@@ -17,12 +18,17 @@ public class EnemySpawner : MonoBehaviour
     {
     }
 
+    public void StartEnemySpawn()
+    {
+        StartCoroutine(DelaySpawn());
+    }
+
     private IEnumerator DelaySpawn()
     {
         while (true)
         {
             yield return new WaitForSeconds(spawnEvery);
-            GameObject spawned = Instantiate(toSpawn);
+            GameObject spawned = Instantiate(toSpawn, spawnPosition, Quaternion.identity);
             spawned.SetActive(true);
         }
     }

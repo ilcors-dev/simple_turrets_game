@@ -4,9 +4,25 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour
 {
+    /// <summary>
+    /// The position on the grid as array index
+    /// </summary>
     public Point GridPosition { get; private set; }
 
+    /// <summary>
+    /// The tile width and height
+    /// </summary>
     private float TileXSize, TileYSize;
+
+    /// <summary>
+    /// The center of the tile
+    /// </summary>
+    public Vector3 center;
+
+    /// <summary>
+    /// Signals if the tile is occupied by a turrett or not
+    /// </summary>
+    private bool occupiedTile = false;
 
     // Start is called before the first frame update
     void Start()
@@ -14,12 +30,7 @@ public class TileScript : MonoBehaviour
         SpriteRenderer rd = GetComponent<SpriteRenderer>();
         TileXSize = rd.size.x;
         TileYSize = rd.size.y;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        center = transform.GetComponent<Collider2D>().bounds.center;
     }
 
     /// <summary>
@@ -40,13 +51,13 @@ public class TileScript : MonoBehaviour
     private void OnMouseOver()
     {
         //Debug.Log(GridPosition.X + " " + GridPosition.Y);
-        if (transform.childCount > 0)
+        if (transform.childCount > 0 && !occupiedTile)
             transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
     }
 
     private void OnMouseExit()
     {
-        if (transform.childCount > 0)
+        if (transform.childCount > 0 && !occupiedTile)
             transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
     }
 
@@ -55,9 +66,17 @@ public class TileScript : MonoBehaviour
         PlaceTower();
     }
 
+    /// <summary>
+    /// Places a turrett on the tile if there is not another one on it & the tile is not road
+    /// </summary>
     private void PlaceTower()
     {
-        Collider2D box = transform.GetComponent<Collider2D>();
-        Instantiate(GameManager.Instance.TowerPrefab, new Vector3(box.bounds.center.x, box.bounds.center.y, box.bounds.center.z - 1f), Quaternion.identity);
+
+        if (!occupiedTile && !gameObject.CompareTag("Road"))
+        {
+            Instantiate(GameManager.Instance.TowerPrefab, new Vector3(center.x, center.y, center.z - 1f), Quaternion.identity);
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        }
+        occupiedTile = true;
     }
 }
