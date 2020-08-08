@@ -4,20 +4,36 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    [Header("Turret specs")]
     /// <summary>
     /// turret damage
     /// </summary>
-    public int damage = 1;
+    [SerializeField]
+    private int damage = 1;
 
     /// <summary>
     /// firerate of the turret in seconds
     /// </summary>
-    public float fireRate;
+    [SerializeField]
+    private float fireRate;
+
+    /// <summary>
+    /// Counter backwards, when 0 is reached then the turret will fire if a target is locked
+    /// </summary>
+    private float fireCountdown = 0f;
 
     /// <summary>
     /// range of the turret
     /// </summary>
-    public float fireRange = 1f;
+    [SerializeField]
+    private float fireRange;
+
+    /// <summary>
+    /// the range of the turret
+    /// </summary>
+    GameObject range;
+
+    [Header("Turret prefabs")]
 
     /// <summary>
     /// The bullet that gets instantiated
@@ -25,52 +41,93 @@ public class Turret : MonoBehaviour
     public GameObject bulletPrefab;
 
     /// <summary>
-    /// the range of the turret
+    /// The turret locked target
     /// </summary>
-    GameObject range;
+    private Transform lockedTarget { get; set; }
 
-    // enemies in range
-    //public HashSet<GameObject> inRange;
-
-    // shoot only at the locked target
-    public GameObject lockedTarget { get; set; }
-
+    /// <summary>
+    /// The animation shown when shooting
+    /// </summary>
     public GameObject shootAnimation;
 
     // Start is called before the first frame update
     void Start()
     {
+        InvokeRepeating("AcquireTarget", 0f, 0.2f);
         //inRange = new HashSet<GameObject>();
         range = transform.GetChild(0).gameObject;
         shootAnimation = gameObject.transform.GetChild(2).gameObject;
+        DrawRange();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (lockedTarget != null)
+        // if no target is acquired, return
+        if (lockedTarget == null)
         {
-            ////find the vector pointing from our position to the target
-            Vector3 targetDirection = lockedTarget.transform.position - transform.position;
-
-            //// Draw a ray pointing at our target in
-            Debug.DrawRay(transform.position, targetDirection, Color.red);
-
-            //transform.rotation = Quaternion.LookRotation(targetDirection);
-
-            var offset = 90f;
-            Vector2 direction = (Vector2)lockedTarget.transform.position - (Vector2)transform.position;
-            direction.Normalize();
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(Vector3.forward * (angle - offset));
+            return;
         }
+
+        // always rotate towards target if the enemy is locked
+        RotateTorwardsTarget();
+
+        // if the countdown is <= 0 it's time to shoot
+        if (fireCountdown <= 0f)
+        {
+            Shoot(lockedTarget);
+
+            fireCountdown = 1f / fireRate;
+        }
+
+        // decrement the fireCountdown
+        fireCountdown -= Time.deltaTime;
     }
 
-    //private void OnMouseDown()
-    //{
-    //    EnableDisableRange();
-    //}
+    /// <summary>
+    /// Acquires the nearest enemy and locks it.
+    /// </summary>
+    private void AcquireTarget()
+    {
+        // get all the enemies in the field
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
+        // temporary nearest enemy
+        GameObject nearestEnemy = null;
+
+        // shortest distance to enemy
+        float shortestDistance = Mathf.Infinity;
+
+        // the turret position
+        Vector3 currentPos = transform.position;
+
+        foreach (GameObject enemy in enemies)
+        {
+            // this transform distance to enemy
+            float distanceToEnemy = Vector3.Distance(enemy.transform.position, currentPos);
+
+            // if the calculated distance is less than the one calculated before
+            // it means that the current enemy is the nearest one
+            if (distanceToEnemy < shortestDistance)
+            {
+                nearestEnemy = enemy;
+                shortestDistance = distanceToEnemy;
+            }
+        }
+        // if the nearest enemy is not null and its distance is in the turret range then we can lock the target
+        if (nearestEnemy != null && shortestDistance <= fireRange)
+            lockedTarget = nearestEnemy.transform;
+        else lockedTarget = null;// nearest enemy is not in range or no enemies at all found
+    }
+
+    private void OnMouseDown()
+    {
+        EnableDisableRange();
+    }
+
+    /// <summary>
+    /// Enables/disables the turret range indicator
+    /// </summary>
     void EnableDisableRange()
     {
         SpriteRenderer rangeSprite = range.GetComponent<SpriteRenderer>();
@@ -85,87 +142,75 @@ public class Turret : MonoBehaviour
     /// </summary>
     /// <param name="enemy">GameObject</param>
     /// <returns></returns>
-    public IEnumerator Shoot(GameObject enemy)
+    public void Shoot(Transform enemy)
     {
-        // shoot only if the turret has acquire a target
-        // and only if the target equals to the locked one
-        while (lockedTarget != null && lockedTarget.Equals(enemy))
-        {
-            // spawn bullet
-            GameObject bullet = Instantiate(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.transform.position.z), Quaternion.identity);
-            // get script
-            Bullet bulletScript = bullet.GetComponent<Bullet>();
-            
-            // assign target to the bullet
-            bulletScript.lockedTarget = true;
-            bulletScript.closest = enemy;
-            bulletScript.damage = damage;// set bullet damage based on turret specs
+        // spawn bullet
+        GameObject bullet = Instantiate(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), Quaternion.identity);
+        // get script
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
 
-            bullet.SetActive(true);// show bullet
+        // assign target to the bullet
+        bulletScript.lockedTarget = true;
+        bulletScript.target = enemy;
+        bulletScript.damage = damage;// set bullet damage based on turret specs
 
-            // show shoot animation of the turret
-            GameObject shootExplosion = Instantiate(shootAnimation, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, -5f), Quaternion.identity);
-            //shootExplosion.transform.LookAt(enemy.transform);
-            shootExplosion.SetActive(true);
+        bullet.SetActive(true);// show bullet
 
-            // get its particle system which actually holds the particle stuff
-            ParticleSystem animation = shootExplosion.GetComponentInChildren<ParticleSystem>();
+        // show shoot animation of the turret
+        GameObject shootExplosion = Instantiate(shootAnimation, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, -5f), Quaternion.identity);
+        //shootExplosion.transform.LookAt(enemy.transform);
+        shootExplosion.SetActive(true);
 
-            // calculate the animation duration
-            float animationDuration = animation.main.duration + animation.main.startLifetime.constant;
+        // get its particle system which actually holds the particle stuff
+        ParticleSystem animation = shootExplosion.GetComponentInChildren<ParticleSystem>();
 
-            // start the animation
-            animation.Play();
+        // calculate the animation duration
+        float animationDuration = animation.main.duration + animation.main.startLifetime.constant;
 
-            // destroy it after the animation finished
-            Destroy(shootExplosion, animationDuration);
+        // start the animation
+        animation.Play();
 
-            // if the locked target died or existed the range locked target will be set to null
-            // stop this coroutine for optimization reasons
-            if (lockedTarget == null)// stop coroutine
-                yield break;
-
-            // wait before shooting again
-            // fireRate is a turret variable in seconds
-            yield return new WaitForSeconds(fireRate);
-        }
+        // destroy it after the animation finished
+        Destroy(shootExplosion, animationDuration);
     }
 
-    //void PrintInRange()
-    //{
-    //    foreach (GameObject o in inRange)
-    //    {
-    //        Debug.Log(o);
-    //    }
-    //}
-
-    private void OnCollisionStay2D(Collision2D collision)
+    /// <summary>
+    /// Rotates the turret towards the locked target.
+    /// </summary>
+    private void RotateTorwardsTarget()
     {
-        // if the collision is an enemy then shoot
-        if (!collision.gameObject.CompareTag("Bullet") && !collision.gameObject.CompareTag("Turret"))
-        {
-            // if turret has no locked any enemy
-            if (lockedTarget == null)
-            {
-                // acquire target
-                lockedTarget = collision.gameObject;
-                // shot only if enemy is locked
-                StartCoroutine(Shoot(collision.gameObject));
-            }
-        }
+        ////find the vector pointing from our position to the target
+        Vector3 targetDirection = lockedTarget.transform.position - transform.position;
+
+        //// Draw a ray pointing at our target in
+        Debug.DrawRay(transform.position, targetDirection, Color.red);
+
+        var offset = 90f;
+        Vector2 direction = (Vector2)lockedTarget.transform.position - (Vector2)transform.position;
+        direction.Normalize();
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(Vector3.forward * (angle - offset));
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    /// <summary>
+    /// Draws the range of the turret
+    /// </summary>
+    private void DrawRange()
     {
-        //Debug.Log(inRange.Count);
-        //if (inRange.Contains(collision.gameObject))
-        //{
-        //    //Debug.Log("Removed: " + collision.gameObject);
-        //    inRange.Remove(collision.gameObject);
-        //}
+        // dunno why, but the actual radius of the turret seems to be the 2/3 of the actual set radius
+        // the turret will also detect an enemy in this range and not in the actual set one..
+        float radius = (fireRange * 10 * 2) / 3;
+        range.transform.localScale = new Vector3(radius, radius, radius);
+    }
 
-        // target got out of the range, remove target
-        if (lockedTarget != null && lockedTarget.Equals(collision.gameObject))
-            lockedTarget = null;
+    /// <summary>
+    /// Shows the range of the turret
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        // dunno why, but the actual radius of the turret seems to be the 2/3 of the actual set radius
+        // the turret will also detect an enemy in this range and not in the actual set one..
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, fireRange * 2 / 3);
     }
 }

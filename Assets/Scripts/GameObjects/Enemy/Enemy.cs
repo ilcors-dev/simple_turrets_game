@@ -86,6 +86,8 @@ public class Enemy : MonoBehaviour
             // is not a child of this gameobject but instead it got instantiate in the place where
             // the gameobject health went below 0
             Destroy(gameObject);
+
+            GameManager.Instance.UpdateScore();
         }
 
     }

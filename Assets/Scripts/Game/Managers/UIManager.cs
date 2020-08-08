@@ -17,6 +17,10 @@ public class UIManager : Singleton<UIManager>
         
     }
 
+    /// <summary>
+    /// Updates the text score
+    /// </summary>
+    /// <param name="score">The score text that will update the gui</param>
     public void UpdateTextScore(int score)
     {
         GameObject.FindGameObjectWithTag("Score").GetComponent<TextMeshProUGUI>().text = score.ToString();

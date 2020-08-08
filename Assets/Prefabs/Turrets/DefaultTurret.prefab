@@ -7,7 +7,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6989236638599281230}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -29,10 +29,8 @@ GameObject:
   - component: {fileID: 8657777607199562136}
   - component: {fileID: 8657777607199562137}
   - component: {fileID: 8657777607199562141}
-  - component: {fileID: 947753948}
-  - component: {fileID: 3021811771999674879}
   m_Layer: 11
-  m_Name: Turret
+  m_Name: DefaultTurret
   m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,8 +138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  fireRate: 0.2
-  fireRange: 1
+  fireRate: 2
+  fireRange: 1.5
   bulletPrefab: {fileID: 6447068709141545872, guid: 9df680e823dc06e45bcc13878245ed6a, type: 3}
   shootAnimation: {fileID: 0}
 --- !u!58 &8657777607199562141
@@ -151,47 +149,15 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8657777607199562118}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0021689238, y: 0}
+  m_Offset: {x: -0.0021688584, y: 0.0025144015}
   serializedVersion: 2
-  m_Radius: 5.432209
---- !u!114 &947753948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8657777607199562118}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e175bf83a7c90a4db6e083aacf07dd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  finalObject: {fileID: 8657777607199562118}
-  allTilesLayer:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &3021811771999674879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8657777607199562118}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e175bf83a7c90a4db6e083aacf07dd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  finalObject: {fileID: 8657777607199562118}
-  allTilesLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  m_Radius: 0.9640846
 --- !u!1001 &4877712062221584466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,15 +211,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2178518790054897959, guid: eb3144aaad99f6449b2a0b342e1f91ce, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10.885185
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2178518790054897959, guid: eb3144aaad99f6449b2a0b342e1f91ce, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10.885185
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2178518790054897959, guid: eb3144aaad99f6449b2a0b342e1f91ce, type: 3}
       propertyPath: m_LocalScale.z
-      value: 7.256789
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2544495264538948124, guid: eb3144aaad99f6449b2a0b342e1f91ce, type: 3}
       propertyPath: m_Name
@@ -269,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4920655977694405901, guid: eb3144aaad99f6449b2a0b342e1f91ce, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb3144aaad99f6449b2a0b342e1f91ce, type: 3}
