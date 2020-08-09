@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -38,10 +35,22 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    /// <summary>
+    /// Updates the score and the score text
+    /// </summary>
     public void UpdateScore()
     {
         score++;
         UIManager.Instance.UpdateTextScore(score);
+    }
+
+    /// <summary>
+    /// Updates the balance and the balance text
+    /// </summary>
+    public void UpdateBalance(int coinValue)
+    {
+        coins += coinValue;
+        UIManager.Instance.UpdateTextBalance(coins);
     }
 
     // Start is called before the first frame update

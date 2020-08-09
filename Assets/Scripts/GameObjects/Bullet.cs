@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -63,7 +61,7 @@ public class Bullet : MonoBehaviour
     /// <summary>
     /// The damage of the bullet
     /// </summary>
-    private int damage {set; get;}
+    private int damage { set; get; }
 
     // is target locked?
     // if so the bullet won't update its target enemy
@@ -83,7 +81,7 @@ public class Bullet : MonoBehaviour
     /// Will the bullet damage be critical?
     /// </summary>
     private bool isCriticalDamage;
-    
+
     void Start()
     {
         finalSpeed = speed * Time.deltaTime;

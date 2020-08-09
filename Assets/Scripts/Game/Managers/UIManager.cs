@@ -1,20 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
+    public GameObject coinPopupPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -24,5 +24,14 @@ public class UIManager : Singleton<UIManager>
     public void UpdateTextScore(int score)
     {
         GameObject.FindGameObjectWithTag("Score").GetComponent<TextMeshProUGUI>().text = score.ToString();
+    }
+
+    /// <summary>
+    /// Updates the text balance
+    /// </summary>
+    /// <param name="balance">The balance that will update the gui</param>
+    public void UpdateTextBalance(int balance)
+    {
+        GameObject.FindGameObjectWithTag("CoinBalance").GetComponent<TextMeshProUGUI>().text = balance.ToString();
     }
 }

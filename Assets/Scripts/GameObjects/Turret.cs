@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class Turret : MonoBehaviour
 {
@@ -183,7 +181,8 @@ public class Turret : MonoBehaviour
             turretInfosUI.SetActive(false);
             GameManager.Instance.shownTurretInfos = null;
         }
-        else {
+        else
+        {
             turretInfosUI.SetActive(true);
             // update the turret infos
             UpdateInfos();
@@ -238,7 +237,7 @@ public class Turret : MonoBehaviour
         if (IsCritDamage())
         {
             // create new bullet with critical applied
-            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, Mathf.CeilToInt(damage * critIncrease), true);
+            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, Mathf.CeilToInt(damage * (critIncrease / 100)), true);
         }
         else
             // create new bullet

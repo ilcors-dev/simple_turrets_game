@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class HealthBar : MonoBehaviour
     {
         bar = gameObject;
     }
-    
+
     public void SetSize(float sizeNormalized)
     {
         bar.transform.localScale = new Vector3(sizeNormalized, 1f);

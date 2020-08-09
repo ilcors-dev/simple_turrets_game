@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class DamagePopup : MonoBehaviour
 {
@@ -21,10 +19,15 @@ public class DamagePopup : MonoBehaviour
     private Color textColor;
 
     /// <summary>
+    /// The text component
+    /// </summary>
+    private TextMeshPro textMesh;
+
+    /// <summary>
     /// Creates a damage popup in a given position with a given set text
     /// </summary>
     /// <param name="position">The position the damage text will spawn</param>
-    /// <param name="damageDealt">The dealt damage shown in text</param>
+    /// <param name="damageDealt">The dealt damage to show in text</param>
     /// <param name="isCriticalDamage">If the damage dealt is critical the popup will be different</param>
     /// <returns>DamagePopup</returns>
     public static DamagePopup Create(Vector3 position, int damageDealt, bool isCriticalDamage)
@@ -37,7 +40,6 @@ public class DamagePopup : MonoBehaviour
         return damagePopup;
     }
 
-    private TextMeshPro textMesh;
     // Start is called before the first frame update
     void Awake()
     {
@@ -51,7 +53,7 @@ public class DamagePopup : MonoBehaviour
         transform.position += new Vector3(0, moveYSpeed) * Time.deltaTime;
 
         deathTimer -= Time.deltaTime;
-        if(deathTimer <= 0)
+        if (deathTimer <= 0)
         {
             // fade the text
             textColor.a -= 3f * Time.deltaTime;

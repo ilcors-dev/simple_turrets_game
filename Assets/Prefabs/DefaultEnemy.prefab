@@ -5355,6 +5355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  worthCoinValue: 1
 --- !u!114 &7870740951349856573
 MonoBehaviour:
   m_ObjectHideFlags: 0

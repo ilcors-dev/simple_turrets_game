@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : Singleton<EnemySpawner>
@@ -7,7 +6,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
     public GameObject toSpawn;
     public float spawnEvery;
 
-    public Vector3 spawnPosition { get;  set; }
+    public Vector3 spawnPosition { get; set; }
     // Start is called before the first frame update
     void Start()
     {

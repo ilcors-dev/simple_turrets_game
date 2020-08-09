@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 public class LevelManager : Singleton<LevelManager>
 {
     [Header("Map prefabs")]
@@ -237,7 +236,7 @@ public class LevelManager : Singleton<LevelManager>
                 else
                 {
                     // put node on last tile
-                    PutNode(new Vector3(sameAxis[sameAxis.Count - 1].transform.position.x + (TileSizeX / 2), sameAxis[sameAxis.Count - 1].transform.position.y - (TileSizeY / 2), sameAxis[sameAxis.Count - 1].transform.position.z -2f));
+                    PutNode(new Vector3(sameAxis[sameAxis.Count - 1].transform.position.x + (TileSizeX / 2), sameAxis[sameAxis.Count - 1].transform.position.y - (TileSizeY / 2), sameAxis[sameAxis.Count - 1].transform.position.z - 2f));
                     // put node on first tile
                     PutNode(new Vector3(sameAxis[0].transform.position.x + (TileSizeX / 2), sameAxis[0].transform.position.y - (TileSizeY / 2), sameAxis[0].transform.position.z - 2f));
                 }
