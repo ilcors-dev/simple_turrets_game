@@ -50,6 +50,8 @@ public class Turret : MonoBehaviour
     /// </summary>
     public GameObject shootAnimation;
 
+    private AudioSource audio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +60,7 @@ public class Turret : MonoBehaviour
         range = transform.GetChild(0).gameObject;
         shootAnimation = gameObject.transform.GetChild(2).gameObject;
         DrawRange();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -144,6 +147,7 @@ public class Turret : MonoBehaviour
     /// <returns></returns>
     public void Shoot(Transform enemy)
     {
+        audio.Play();
         // spawn bullet
         GameObject bullet = Instantiate(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), Quaternion.identity);
         // get script
