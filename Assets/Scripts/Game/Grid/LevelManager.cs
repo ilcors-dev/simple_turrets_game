@@ -4,11 +4,19 @@ using UnityEngine;
 using System;
 public class LevelManager : Singleton<LevelManager>
 {
+    [Header("Map prefabs")]
     /// <summary>
     /// The prefabs that will be added to the game that will compose the map
     /// </summary>
     [SerializeField]
     private GameObject[] tilePrefabs;
+
+    /// <summary>
+    /// The deathwall prefab where the enemies will get destroy / the game ends
+    /// It is placed at the end of the path
+    /// </summary>
+    [SerializeField]
+    private GameObject deathWallPrefab;
 
     /// <summary>
     /// The parent of the tiles that will be added
@@ -235,6 +243,10 @@ public class LevelManager : Singleton<LevelManager>
                 }
             }
         }
+
+        // change last tile to be the death wall where enemies will get destroy / the game will end
+        roadTiles.Add(Instantiate(deathWallPrefab, roadTiles[roadTiles.Count - 1].transform.position, Quaternion.identity));
+        Destroy(roadTiles[roadTiles.Count - 2]);
 
         // put last node
         PutNode(new Vector3(roadTiles[roadTiles.Count - 1].transform.position.x + (TileSizeX / 2), roadTiles[roadTiles.Count - 1].transform.position.y - (TileSizeY / 2), roadTiles[roadTiles.Count - 1].transform.position.z - 2f));
