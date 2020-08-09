@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Turret : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// How many enemies the turret killed
     /// </summary>
-    public int killedEnemies { get; set; }
+    public int totalKilled { get; set; }
 
     [Header("Turret prefabs")]
     /// <summary>
@@ -69,6 +70,20 @@ public class Turret : MonoBehaviour
     /// </summary>
     public GameObject shootAnimation;
 
+    /// <summary>
+    /// The turret info UI components
+    /// </summary>
+    [SerializeField]
+    private GameObject turretInfoPrefab;
+
+    /// <summary>
+    /// If the turret infos are shown
+    /// </summary>
+    private GameObject turretInfosUI;
+
+    /// <summary>
+    /// Turret shoot audio
+    /// </summary>
     private AudioSource audio;
 
     // Start is called before the first frame update
@@ -78,7 +93,14 @@ public class Turret : MonoBehaviour
         //inRange = new HashSet<GameObject>();
         range = transform.GetChild(0).gameObject;
         shootAnimation = gameObject.transform.GetChild(2).gameObject;
+
+        // draw turret range
         DrawRange();
+
+        // get turret infos gui
+        turretInfosUI = transform.GetChild(3).gameObject;
+
+        // get audio source
         audio = GetComponent<AudioSource>();
     }
 
@@ -144,19 +166,57 @@ public class Turret : MonoBehaviour
 
     private void OnMouseDown()
     {
+        EnableDisableInfos();
         EnableDisableRange();
+    }
+
+    /// <summary>
+    /// Shows / Deletes turret infos UI
+    /// </summary>
+    private void EnableDisableInfos()
+    {
+        if (GameManager.Instance.shownTurretInfos != null && !turretInfosUI.Equals(GameManager.Instance.shownTurretInfos))
+            GameManager.Instance.shownTurretInfos.SetActive(false);
+
+        if (turretInfosUI.activeSelf)
+        {
+            turretInfosUI.SetActive(false);
+            GameManager.Instance.shownTurretInfos = null;
+        }
+        else {
+            turretInfosUI.SetActive(true);
+            // update the turret infos
+            UpdateInfos();
+
+            GameManager.Instance.shownTurretInfos = turretInfosUI;
+        }
+    }
+
+    /// <summary>
+    /// Updates turret infos texts
+    /// </summary>
+    public void UpdateInfos()
+    {
+        GameObject infos = turretInfosUI.transform.GetChild(0).gameObject;
+        infos.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("Damage: " + damage.ToString());
+        infos.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText("Firerate: " + fireRate.ToString());
+        infos.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText("Range: " + fireRange.ToString());
+        infos.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText("Total killed: " + totalKilled.ToString());
+        infos.transform.GetChild(5).GetComponent<TextMeshProUGUI>().SetText("Crit chance: " + critChance.ToString() + "%");
+        infos.transform.GetChild(6).GetComponent<TextMeshProUGUI>().SetText("Critical damage increase: " + critIncrease.ToString() + "%");
     }
 
     /// <summary>
     /// Enables/disables the turret range indicator
     /// </summary>
-    void EnableDisableRange()
+    private void EnableDisableRange()
     {
+        SpriteRenderer rangeSprite = range.GetComponent<SpriteRenderer>();
+
         // show just one range indicator
-        if (GameManager.Instance.shownRange != null)
+        if (GameManager.Instance.shownRange != null && !rangeSprite.Equals(GameManager.Instance.shownRange))
             GameManager.Instance.shownRange.enabled = false;
 
-        SpriteRenderer rangeSprite = range.GetComponent<SpriteRenderer>();
         if (rangeSprite.enabled)
             rangeSprite.enabled = false;
         else

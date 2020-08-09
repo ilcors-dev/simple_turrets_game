@@ -125,7 +125,8 @@ public class Bullet : MonoBehaviour
             // if the bullet will kill the enemy, increment the turret killed enemies attribute
             if (enemy.health - damage <= 0)
             {
-                shootBy.killedEnemies++;
+                shootBy.totalKilled++;
+                shootBy.UpdateInfos();
             }
 
             enemy.DealDamage(damage);
