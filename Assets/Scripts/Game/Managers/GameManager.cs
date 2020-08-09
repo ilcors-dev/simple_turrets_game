@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-    // test place
     [SerializeField]
     private GameObject towerPrefab;
 
@@ -13,6 +12,12 @@ public class GameManager : Singleton<GameManager>
     /// The player score
     /// </summary>
     private int score = 0;
+
+    /// <summary>
+    /// The current turret shown range.
+    /// Used to show just one range per time.
+    /// </summary>
+    public SpriteRenderer shownRange { get; set; }
 
     public GameObject TowerPrefab
     {

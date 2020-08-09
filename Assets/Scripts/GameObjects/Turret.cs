@@ -133,11 +133,18 @@ public class Turret : MonoBehaviour
     /// </summary>
     void EnableDisableRange()
     {
+        // show just one range indicator
+        if (GameManager.Instance.shownRange != null)
+            GameManager.Instance.shownRange.enabled = false;
+
         SpriteRenderer rangeSprite = range.GetComponent<SpriteRenderer>();
         if (rangeSprite.enabled)
             rangeSprite.enabled = false;
         else
             rangeSprite.enabled = true;
+
+        // assign new range indicator to this that got set now
+        GameManager.Instance.shownRange = rangeSprite;
     }
 
     /// <summary>
