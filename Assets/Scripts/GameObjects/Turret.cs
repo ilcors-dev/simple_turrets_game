@@ -15,6 +15,7 @@ public class Turret : MonoBehaviour
     /// firerate of the turret in seconds
     /// </summary>
     [SerializeField]
+    [Tooltip("Fire every n seconds")]
     private float fireRate;
 
     /// <summary>
@@ -33,8 +34,26 @@ public class Turret : MonoBehaviour
     /// </summary>
     GameObject range;
 
-    [Header("Turret prefabs")]
+    /// <summary>
+    /// The turret chance to make a critical hit
+    /// </summary>
+    [SerializeField]
+    [Tooltip("Critical chance (%)")]
+    private float critChance;
 
+    /// <summary>
+    /// How much will the turret damage be increased on a critical hit
+    /// </summary>
+    [SerializeField]
+    [Tooltip("The increased damage of a critical hit (%)")]
+    private float critIncrease;
+
+    /// <summary>
+    /// How many enemies the turret killed
+    /// </summary>
+    public int killedEnemies { get; set; }
+
+    [Header("Turret prefabs")]
     /// <summary>
     /// The bullet that gets instantiated
     /// </summary>
@@ -155,17 +174,15 @@ public class Turret : MonoBehaviour
     public void Shoot(Transform enemy)
     {
         audio.Play();
-        // spawn bullet
-        GameObject bullet = Instantiate(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), Quaternion.identity);
-        // get script
-        Bullet bulletScript = bullet.GetComponent<Bullet>();
 
-        // assign target to the bullet
-        bulletScript.lockedTarget = true;
-        bulletScript.target = enemy;
-        bulletScript.damage = damage;// set bullet damage based on turret specs
-
-        bullet.SetActive(true);// show bullet
+        if (IsCritDamage())
+        {
+            // create new bullet with critical applied
+            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, Mathf.CeilToInt(damage * critIncrease), true);
+        }
+        else
+            // create new bullet
+            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, damage, false);
 
         // show shoot animation of the turret
         GameObject shootExplosion = Instantiate(shootAnimation, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, -5f), Quaternion.identity);
@@ -183,6 +200,19 @@ public class Turret : MonoBehaviour
 
         // destroy it after the animation finished
         Destroy(shootExplosion, animationDuration);
+    }
+
+    /// <summary>
+    /// Determines if the damage to deal will be a critical one based on the turret crit chance.
+    /// </summary>
+    /// <returns>True if the damage will be critical, False otherwise</returns>
+    private bool IsCritDamage()
+    {
+        float randValue = Random.value;// returns number from 0f to 1f
+        if (randValue < critChance / 100)// crit chance 5 means cause of the return from random above 0.05
+            return true;
+
+        return false;
     }
 
     /// <summary>
