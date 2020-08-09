@@ -141,6 +141,8 @@ MonoBehaviour:
   damage: 1
   fireRate: 2
   fireRange: 1.5
+  critChance: 5
+  critIncrease: 10
   bulletPrefab: {fileID: 6447068709141545872, guid: 9df680e823dc06e45bcc13878245ed6a, type: 3}
   shootAnimation: {fileID: 0}
 --- !u!58 &8657777607199562141

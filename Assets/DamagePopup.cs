@@ -73,7 +73,7 @@ public class DamagePopup : MonoBehaviour
         textMesh.SetText(damageDealt.ToString());
 
         // movement speed on y axis of the popup
-        moveYSpeed = 2f;
+        moveYSpeed = 1.5f;
 
         if (!isCriticalDamage)// not critical
         {
@@ -86,6 +86,6 @@ public class DamagePopup : MonoBehaviour
             textMesh.fontSize = 2f;// make bigger text on crit damage
         }
 
-        deathTimer = 1f;// init death timer of popup
+        deathTimer = .7f;// init death timer of popup
     }
 }

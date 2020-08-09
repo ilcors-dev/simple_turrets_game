@@ -11,7 +11,12 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// The player score
     /// </summary>
-    private int score = 0;
+    private int score;
+
+    /// <summary>
+    /// Coins earned this round
+    /// </summary>
+    public int coins { get; set; }
 
     /// <summary>
     /// The current turret shown range.
