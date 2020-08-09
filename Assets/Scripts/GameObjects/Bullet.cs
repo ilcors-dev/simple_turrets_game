@@ -60,6 +60,7 @@ public class Bullet : MonoBehaviour
         // if bullet hits the enemy, destroy the bullet and deal damage to enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            DamagePopup.Create(collision.transform.position, damage, true);
             collision.gameObject.GetComponent<Enemy>().DealDamage(damage);
             Destroy(gameObject);
         }
