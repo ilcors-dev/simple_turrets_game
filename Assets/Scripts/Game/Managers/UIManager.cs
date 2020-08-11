@@ -5,16 +5,26 @@ public class UIManager : Singleton<UIManager>
 {
     public GameObject coinPopupPrefab;
 
+    [SerializeField]
+    ///<summary>The coin balance ui component</summary>
+    private TextMeshProUGUI coinBalanceUI;
+
+    [SerializeField]
+    ///<summary>The lives left ui component</summary>
+    private TextMeshProUGUI livesLeftUI;
+
+    [SerializeField]
+    ///<summary>The death ui menu component</summary>
+    private GameObject deathMenuUI;
+
+    [SerializeField]
+    ///<summary>The next wave time countdown ui component</summary>
+    private TextMeshProUGUI nextWaveTimerUI;
+
     // Start is called before the first frame update
     void Start()
     {
         SetLivesText();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     /// <summary>
@@ -32,7 +42,7 @@ public class UIManager : Singleton<UIManager>
     /// <param name="balance">The balance that will update the gui</param>
     public void UpdateTextBalance(int balance)
     {
-        GameObject.FindGameObjectWithTag("CoinBalance").GetComponent<TextMeshProUGUI>().text = balance.ToString();
+        coinBalanceUI.text = balance.ToString();
     }
 
     /// <summary>
@@ -40,11 +50,10 @@ public class UIManager : Singleton<UIManager>
     /// </summary>
     public void ShowDeathUI()
     {
-        GameObject deathUI = transform.GetChild(2).gameObject;
-        deathUI.SetActive(true);
+        deathMenuUI.SetActive(true);
 
-        deathUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("Waves survived: blabla");
-        deathUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText("Cash earned: blabla");
+        deathMenuUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("Waves survived: blabla");
+        deathMenuUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText("Cash earned: blabla");
     }
     
     /// <summary>
@@ -52,6 +61,15 @@ public class UIManager : Singleton<UIManager>
     /// </summary>
     public void SetLivesText()
     {
-        transform.GetChild(5).GetComponent<TextMeshProUGUI>().SetText("Lives left: " + GameManager.Instance.livesLeft);
+        livesLeftUI.SetText("Lives left: " + GameManager.Instance.livesLeft);
+    }
+
+    /// <summary>
+    /// Sets the countdown text for how much time is left before the next wave spawn
+    /// </summary>
+    public void SetNextWaveCountdownText(float timer)
+    {
+        string toDisplay = "Next wave: " + string.Format("{0:00.00}", timer);
+        nextWaveTimerUI.SetText(toDisplay);
     }
 }

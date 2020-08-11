@@ -34,6 +34,11 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public int livesLeft;
 
+    /// <summary>
+    /// The current wave
+    /// </summary>
+    public int round = 0;
+
     public GameObject TowerPrefab
     {
         get
