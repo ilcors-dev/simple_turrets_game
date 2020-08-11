@@ -31,9 +31,13 @@ public class CoinPopup : MonoBehaviour
     /// <returns>CoinPopup</returns>
     public static CoinPopup Create(int coinValue)
     {
-        Vector3 constPosition = new Vector3(1.4f, 4.4f, 0);
+        // get the coin balance text
+        Vector3 coinTextPos = Camera.main.ScreenToWorldPoint(GameObject.FindGameObjectWithTag("CoinBalance").transform.position);
 
-        Transform coinPopupTransform = Instantiate(UIManager.Instance.coinPopupPrefab, Random.insideUnitSphere * .1f + constPosition, Quaternion.identity).transform;
+        // spawn the coin near the coin balance text
+        Vector3 toSpawn =  new Vector3(coinTextPos.x - .35f, coinTextPos.y, 0);
+
+        Transform coinPopupTransform = Instantiate(UIManager.Instance.coinPopupPrefab, Random.insideUnitSphere * .1f + toSpawn, Quaternion.identity).transform;
 
         CoinPopup coinPopup = coinPopupTransform.GetComponent<CoinPopup>();
         coinPopup.Setup(coinValue);
