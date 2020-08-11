@@ -144,6 +144,7 @@ MonoBehaviour:
   fireRange: 1.5
   critChance: 5
   critIncrease: 10
+  price: 100
   damageUpgradeIncrease: 13
   fireRateUpgradeIncrease: 12
   rangeUpgradeIncrease: 5
