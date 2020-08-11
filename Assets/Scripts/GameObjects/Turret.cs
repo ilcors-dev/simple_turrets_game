@@ -31,7 +31,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// the range of the turret
     /// </summary>
-    GameObject range;
+    SpriteRenderer range;
 
     /// <summary>
     /// The turret chance to make a critical hit
@@ -51,6 +51,53 @@ public class Turret : MonoBehaviour
     /// How many enemies the turret killed
     /// </summary>
     public int totalKilled { get; set; }
+
+    ///<summary>
+    ///Turret current level
+    ///</summary>
+    private int turretLevel = 1;
+
+    [Header("Turret upgrade specs increment")]
+    [SerializeField]
+    [Tooltip("Damage increase on upgrade (%)")]
+    ///<summary>Damage increase on upgrade</summary>
+    private int damageUpgradeIncrease;
+
+    [SerializeField]
+    [Tooltip("Firerate increase on upgrade (%)")]
+    ///<summary>Firerate increase on upgrade</summary>
+    private int fireRateUpgradeIncrease;
+
+    [SerializeField]
+    [Tooltip("Range increase on upgrade (%)")]
+    ///<summary>Range increase on upgrade</summary>
+    private float rangeUpgradeIncrease;
+
+    [SerializeField]
+    [Tooltip("Critical chance increase on upgrade (%)")]
+    ///<summary>Critical chance increase on upgrade</summary>
+    private float critChanceUpgradeIncrease;
+
+    [SerializeField]
+    [Tooltip("Critical damage increase on upgrade (%)")]
+    ///<summary>Critical damage increase on upgrade</summary>
+    private float critDamageUpgradeIncrease;
+
+    [Header("The upgrade of the turret economy")]
+    [SerializeField]
+    [Tooltip("The upgrade cost")]
+    /// <summary>
+    /// How much each upgrade will cost
+    /// </summary>
+    private int upgradeCost;
+
+    [SerializeField]
+    [Tooltip("How much the upgrade cost of the turret will increase by (%)")]
+    /// <summary>
+    /// How much the upgrade cost of the turret will increase
+    /// </summary>
+    private int upgradeCostIncrease;
+
 
     [Header("Turret prefabs")]
     /// <summary>
@@ -89,7 +136,7 @@ public class Turret : MonoBehaviour
     {
         InvokeRepeating("AcquireTarget", 0f, 0.2f);
         //inRange = new HashSet<GameObject>();
-        range = transform.GetChild(0).gameObject;
+        range = transform.GetChild(0).GetComponent<SpriteRenderer>();
         shootAnimation = gameObject.transform.GetChild(2).gameObject;
 
         // draw turret range
@@ -100,6 +147,8 @@ public class Turret : MonoBehaviour
 
         // get audio source
         audio = GetComponent<AudioSource>();
+
+        turretLevel = 1;
     }
 
     // Update is called once per frame
@@ -124,6 +173,13 @@ public class Turret : MonoBehaviour
 
         // decrement the fireCountdown
         fireCountdown -= Time.deltaTime;
+
+        // update turret infos if open each frame
+        if (turretInfosUI.activeSelf)
+        {
+            UpdateInfos();
+            UpdateUpgradePreviewInfos();
+        }
     }
 
     /// <summary>
@@ -156,6 +212,10 @@ public class Turret : MonoBehaviour
                 shortestDistance = distanceToEnemy;
             }
         }
+        // this prevents the script from locking a new target when the old one is still in range
+        if (lockedTarget != null && Vector3.Distance(lockedTarget.transform.position, currentPos) < fireRange)
+            return;
+        
         // if the nearest enemy is not null and its distance is in the turret range then we can lock the target
         if (nearestEnemy != null && shortestDistance <= fireRange)
             lockedTarget = nearestEnemy.transform;
@@ -173,19 +233,21 @@ public class Turret : MonoBehaviour
     /// </summary>
     private void EnableDisableInfos()
     {
+        // if another turret infos are shown, close them to let this turret infos open
         if (GameManager.Instance.shownTurretInfos != null && !turretInfosUI.Equals(GameManager.Instance.shownTurretInfos))
             GameManager.Instance.shownTurretInfos.SetActive(false);
 
+        // if the infos are active close them
         if (turretInfosUI.activeSelf)
         {
             turretInfosUI.SetActive(false);
             GameManager.Instance.shownTurretInfos = null;
         }
-        else
+        else// otherwise show them
         {
             turretInfosUI.SetActive(true);
-            // update the turret infos
-            UpdateInfos();
+            // show actual gui
+            ShowTurretInfos();
 
             GameManager.Instance.shownTurretInfos = turretInfosUI;
         }
@@ -197,12 +259,33 @@ public class Turret : MonoBehaviour
     public void UpdateInfos()
     {
         GameObject infos = turretInfosUI.transform.GetChild(0).gameObject;
+        // turret lvl
+        infos.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Turret infos (LVL: " + turretLevel.ToString() + ")");
+        // damage
         infos.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("Damage: " + damage.ToString());
-        infos.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText("Firerate: " + fireRate.ToString());
-        infos.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText("Range: " + fireRange.ToString());
-        infos.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText("Total killed: " + totalKilled.ToString());
-        infos.transform.GetChild(5).GetComponent<TextMeshProUGUI>().SetText("Crit chance: " + critChance.ToString() + "%");
-        infos.transform.GetChild(6).GetComponent<TextMeshProUGUI>().SetText("Critical damage increase: " + critIncrease.ToString() + "%");
+        // firerate
+        infos.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText("Firerate: " + fireRate.ToString("#.#"));
+        // firerange
+        infos.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText("Range: " + fireRange.ToString("#.#"));
+        // total enemies killed
+        infos.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText("Total killed: " + totalKilled.ToString("#.#"));
+        // critical chance
+        infos.transform.GetChild(5).GetComponent<TextMeshProUGUI>().SetText("Crit chance: " + critChance.ToString("#.#") + "%");
+        // critical hit damage increase
+        infos.transform.GetChild(6).GetComponent<TextMeshProUGUI>().SetText("Critical damage increase: " + critIncrease.ToString("#.#") + "%");
+
+        // upgrade button text
+        TextMeshProUGUI upgradeText = infos.transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        // not enough money to buy the upgrade
+        if (GameManager.Instance.coins < upgradeCost)
+        {
+            upgradeText.color = new Color32(252, 3, 36, 255);// show red color
+        }else// can buy
+            upgradeText.color = new Color32(32, 231, 51, 255);// show green color
+
+        // upgrade price
+        upgradeText.SetText("Upgrade (" + upgradeCost + ")");
     }
 
     /// <summary>
@@ -210,19 +293,17 @@ public class Turret : MonoBehaviour
     /// </summary>
     private void EnableDisableRange()
     {
-        SpriteRenderer rangeSprite = range.GetComponent<SpriteRenderer>();
-
         // show just one range indicator
-        if (GameManager.Instance.shownRange != null && !rangeSprite.Equals(GameManager.Instance.shownRange))
+        if (GameManager.Instance.shownRange != null && !range.Equals(GameManager.Instance.shownRange))
             GameManager.Instance.shownRange.enabled = false;
 
-        if (rangeSprite.enabled)
-            rangeSprite.enabled = false;
+        if (range.enabled)
+            range.enabled = false;
         else
-            rangeSprite.enabled = true;
+            range.enabled = true;
 
         // assign new range indicator to this that got set now
-        GameManager.Instance.shownRange = rangeSprite;
+        GameManager.Instance.shownRange = range;
     }
 
     /// <summary>
@@ -237,7 +318,7 @@ public class Turret : MonoBehaviour
         if (IsCritDamage())
         {
             // create new bullet with critical applied
-            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, Mathf.CeilToInt(damage * (critIncrease / 100)), true);
+            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, damage + IncreaseByPercentageInt(damage, critIncrease), true);
         }
         else
             // create new bullet
@@ -312,5 +393,98 @@ public class Turret : MonoBehaviour
         // the turret will also detect an enemy in this range and not in the actual set one..
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, fireRange * 2 / 3);
+    }
+
+    public void UpgradeTurret()
+    {
+        if (GameManager.Instance.coins >= upgradeCost)
+        {
+            damage += IncreaseByPercentageInt(damage, damageUpgradeIncrease);
+
+            fireRange += IncreaseByPercentageFloat(fireRange, rangeUpgradeIncrease);
+            fireRate += IncreaseByPercentageFloat(fireRate, fireRateUpgradeIncrease);
+
+            if (critChance < 100)
+                critChance += IncreaseByPercentageFloat(critChance, critChanceUpgradeIncrease);
+
+            if (critChance >= 100)
+                critChance = 100;// max limit reached
+
+            if (critIncrease < 100)
+                critIncrease += IncreaseByPercentageFloat(critIncrease, critDamageUpgradeIncrease);
+
+            if (critIncrease >= 100)
+                critIncrease = 100;// max limi reached
+
+            turretLevel += 1;
+
+            // coin spent on upgrade
+            GameManager.Instance.UpdateBalance(-upgradeCost);
+
+            // increase the turret upgrade cost
+            upgradeCost += IncreaseByPercentageInt(upgradeCost, upgradeCostIncrease);
+
+            // update turret infos
+            ShowTurretInfos();
+        }
+    }
+
+    /// <summary>
+    /// Shows what will change on the next turret upgrade
+    /// </summary>
+    public void UpdateUpgradePreviewInfos()
+    {
+        GameObject upgradeInfos = turretInfosUI.transform.GetChild(1).gameObject;
+        // damage
+        upgradeInfos.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("+" + IncreaseByPercentageInt(damage, damageUpgradeIncrease).ToString());
+        // fire rate
+        upgradeInfos.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("+" + IncreaseByPercentageFloat(fireRate, fireRateUpgradeIncrease).ToString("#.#"));
+        // range
+        upgradeInfos.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText("+" + IncreaseByPercentageFloat(fireRange, rangeUpgradeIncrease).ToString("#.#"));
+        // critical chance
+        if (critChance < 100)
+            upgradeInfos.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText("+" + IncreaseByPercentageFloat(critChance, critChanceUpgradeIncrease).ToString("#.#") + "%");
+        else
+            upgradeInfos.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+        // critical damage increase
+        if (critIncrease < 100)
+            upgradeInfos.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText("+" + IncreaseByPercentageFloat(critIncrease, critDamageUpgradeIncrease).ToString("#.#") + "%");
+        else
+            upgradeInfos.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+    }
+
+    /// <summary>
+    /// Calculates the percentage increment given a base and a percentage increase and returns the result as NEXT INTEGER
+    /// </summary>
+    /// <param name="nBase"></param>
+    /// <param name="percentageIncrease"></param>
+    /// <returns>Rounds to next INTEGER</returns>
+    private int IncreaseByPercentageInt(int nBase, float percentageIncrease)
+    {
+        return Mathf.CeilToInt(nBase * (percentageIncrease / 100));
+    }
+
+    /// <summary>
+    /// Calculates the percentage increment given a base and a percentage increase and returns the result as NEXT FLOAT
+    /// </summary>
+    /// <param name="nBase"></param>
+    /// <param name="percentageIncrease"></param>
+    /// <returns>Rounds to next FLOAT</returns>
+    private float IncreaseByPercentageFloat(float nBase, float percentageIncrease)
+    {
+        return nBase * (percentageIncrease / 100);
+    }
+
+    /// <summary>
+    /// Shows turret infos
+    /// </summary>
+    private void ShowTurretInfos()
+    {
+        // update the turret infos
+        UpdateInfos();
+        UpdateUpgradePreviewInfos();
+
+        // show turret range
+        DrawRange();
     }
 }

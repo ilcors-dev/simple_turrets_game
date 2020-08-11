@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using System.Collections;
+using System.Collections.Generic;
 
 public class TileScript : MonoBehaviour
 {
@@ -48,9 +51,10 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseOver()
     {
-        //Debug.Log(GridPosition.X + " " + GridPosition.Y);
-        if (transform.childCount > 0 && !occupiedTile)
-            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+        // show only if turrets info are not show
+        if (GameManager.Instance.shownTurretInfos == null && GameManager.Instance.livesLeft != 0)
+            if (transform.childCount > 0 && !occupiedTile)
+                transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
     }
 
     private void OnMouseExit()
@@ -61,7 +65,28 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        PlaceTower();
+        // not trigger on ui clicks
+        if (!IsPointerOverUIObject())
+        {
+            // disable turret infos on click on tile
+            if (GameManager.Instance.shownTurretInfos != null)
+            {
+                GameManager.Instance.shownTurretInfos.SetActive(false);
+                GameManager.Instance.shownTurretInfos = null;
+            }
+
+            // disable turret range on click on tile
+            if (GameManager.Instance.shownRange != null)
+            {
+                GameManager.Instance.shownRange.enabled = false;
+                GameManager.Instance.shownRange = null;
+            }
+            // if the turret gui is not shown, place tower
+            // useful because the user could click on the map to disable the turret infos
+            // and no turrets would be placed
+            else
+                PlaceTower();
+        }
     }
 
     /// <summary>
@@ -76,5 +101,18 @@ public class TileScript : MonoBehaviour
             transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
         }
         occupiedTile = true;
+    }
+
+    /// <summary>
+    /// Checks if click is over gameobject or gui
+    /// </summary>
+    /// <returns>false if the click was on gui, true otherwise</returns>
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

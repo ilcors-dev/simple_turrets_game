@@ -49,7 +49,10 @@ public class Enemy : MonoBehaviour
         // if the collision is the death wall, destroy enemy
         // TODO: decrement player live / end game
         if (collision.CompareTag("DeathWall"))
+        {
+            GameManager.Instance.DecrementLives();
             Destroy(gameObject);
+        }
     }
     /// <summary>
     /// Deals damage to the enemy.
@@ -77,7 +80,7 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
 
             GameManager.Instance.UpdateBalance(worthCoinValue);
-            GameManager.Instance.UpdateScore();
+            //GameManager.Instance.UpdateScore();
         }
 
     }

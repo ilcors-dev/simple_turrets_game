@@ -6,9 +6,10 @@ public class GameManager : Singleton<GameManager>
     private GameObject towerPrefab;
 
     /// <summary>
-    /// The player score
+    /// The overall cash earned per wave
+    /// Each wave has its own value, the more difficult the more value
     /// </summary>
-    private int score;
+    private int overallCash;
 
     /// <summary>
     /// Coins earned this round
@@ -27,6 +28,12 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public GameObject shownTurretInfos { get; set; }
 
+    /// <summary>
+    /// How many lives the user has left.
+    /// When an enemy reaches the end this will get decreased.
+    /// </summary>
+    public int livesLeft;
+
     public GameObject TowerPrefab
     {
         get
@@ -36,12 +43,12 @@ public class GameManager : Singleton<GameManager>
     }
 
     /// <summary>
-    /// Updates the score and the score text
+    /// Updates the overall cash game currency and the score text
     /// </summary>
-    public void UpdateScore()
+    public void UpdateOverallCash()
     {
-        score++;
-        UIManager.Instance.UpdateTextScore(score);
+        overallCash++;
+        //UIManager.Instance.UpdateTextScore(overallCash);
     }
 
     /// <summary>
@@ -53,13 +60,23 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.UpdateTextBalance(coins);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void DecrementLives()
     {
+        livesLeft--;
+        UIManager.Instance.SetLivesText();
+        if (livesLeft == 0)
+        {
+            EndGame();
+        }
+    }
+    
+    private void EndGame()
+    {
+        Time.timeScale = 0;// freeze game and show death UI
+        UIManager.Instance.ShowDeathUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
 
     }

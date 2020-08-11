@@ -31,12 +31,9 @@ public class CoinPopup : MonoBehaviour
     /// <returns>CoinPopup</returns>
     public static CoinPopup Create(int coinValue)
     {
-        //GameObject popupDup = GameObject.FindGameObjectWithTag("CoinPopup");
+        Vector3 constPosition = new Vector3(1.4f, 4.4f, 0);
 
-        Vector3 rightOffset = new Vector3(1.17f, 4.4f, 0);
-        //Vector3 rightOffset = new Vector3(popupDup.transform.position.x, popupDup.transform.position.y, popupDup.transform.position.z);
-
-        Transform coinPopupTransform = Instantiate(UIManager.Instance.coinPopupPrefab, Random.insideUnitSphere * .1f + rightOffset, Quaternion.identity).transform;
+        Transform coinPopupTransform = Instantiate(UIManager.Instance.coinPopupPrefab, Random.insideUnitSphere * .1f + constPosition, Quaternion.identity).transform;
 
         CoinPopup coinPopup = coinPopupTransform.GetComponent<CoinPopup>();
         coinPopup.Setup(coinValue);
@@ -77,7 +74,7 @@ public class CoinPopup : MonoBehaviour
     {
         textMesh.SetText("+" + coinValue.ToString());
 
-        textMesh.faceColor = new Color32(0, 0, 0, 255);
+        //textMesh.faceColor = new Color32(0, 0, 0, 255);
 
         // movement speed on y axis of the popup
         moveYSpeed = .7f;
