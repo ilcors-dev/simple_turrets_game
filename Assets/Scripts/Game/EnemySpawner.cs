@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : Singleton<EnemySpawner>
@@ -8,7 +9,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
     /// </summary>
     public static int EnemiesAlive = 0;
 
-    public Wave[] waves;
+    public List<Wave> waves;
 
     /// <summary>
     /// Should the spawn of enemy start?
@@ -39,11 +40,15 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
     private float countdown = 0;
 
+    private HashSet<GameObject> availableEnemies;
+
     // Start is called before the first frame update
     void Start()
     {
         EnemiesAlive = 0;
         countdown = timeBetweenWaves;
+
+        availableEnemies = GetAvailableEnemies();
     }
 
     // Update is called once per frame
@@ -110,9 +115,9 @@ public class EnemySpawner : Singleton<EnemySpawner>
         // the number of enemies to spawn each wave
         waveIndex++;
 
-        if(waveIndex >= waves.Length)
+        if(waveIndex >= waves.Count)
         {
-
+            BuildNewWaves();
         }
     }
 
@@ -129,5 +134,26 @@ public class EnemySpawner : Singleton<EnemySpawner>
     private void BuildNewWaves()
     {
 
+        SubWave s = new SubWave(10, .5f);
+        
+    }
+    
+    /// <summary>
+    /// Gets the available enemies to spawn
+    /// </summary>
+    /// <returns></returns>
+    private HashSet<GameObject> GetAvailableEnemies()
+    {
+        HashSet<GameObject> ret = new HashSet<GameObject>();
+
+        foreach (var wave in waves)
+        {
+            foreach (var subwave in wave.subWaves)
+            {
+                ret.Add(subwave.enemy);
+            }
+        }
+
+        return ret;
     }
 }

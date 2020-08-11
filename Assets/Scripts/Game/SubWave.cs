@@ -19,4 +19,10 @@ public class SubWave
     /// Spawn rate of the wave enemies
     /// </summary>
     public float rate;
+
+    public SubWave(int count, float rate)
+    {
+        this.count = count;
+        this.rate = rate;
+    }
 }
