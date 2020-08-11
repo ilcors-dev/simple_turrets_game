@@ -15,12 +15,6 @@ public class EnemySpawner : Singleton<EnemySpawner>
     /// </summary>
     private bool startSpawn;
 
-    [SerializeField]
-    ///<summary>The time from a wave to the other</summary>
-    private float timeBetweenWaves;
-
-    private float countdown = 0;
-
     /// <summary>
     /// The spawned waves
     /// </summary>
@@ -30,6 +24,20 @@ public class EnemySpawner : Singleton<EnemySpawner>
     /// The enemy spawn position
     /// </summary>
     public Vector3 spawnPosition { get; set; }
+
+    [Header("Spawn properties")]
+    /// <summary>
+    /// Signals if the level is an endless one.
+    /// If so the waves will get built during the course of the round
+    /// </summary>
+    [SerializeField]
+    private bool endless;
+
+    [SerializeField]
+    ///<summary>The time from a wave to the other</summary>
+    private float timeBetweenWaves;
+
+    private float countdown = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -81,17 +89,30 @@ public class EnemySpawner : Singleton<EnemySpawner>
         // set text ui
         UIManager.Instance.SetRoundIndexText();
 
-        // get the wave to spawn
-        Wave wave = waves[waveIndex];
+        /*
+         * get the waves in the wave to spawn.
+         * A wave can spawn multiple waves!
+         */
+        Wave waveWaves = waves[waveIndex];
 
-        for (int i = 0; i < wave.count; i++)
+        for (int i = 0; i < waveWaves.subWaves.Length; i++)
         {
-            SpawnEnemy(wave.enemy);
-            yield return new WaitForSeconds(1f / wave.rate);
+            // get the wave of the wave
+            SubWave wave = waveWaves.subWaves[i];
+            for (int j = 0; j < wave.count; j++)
+            {
+                SpawnEnemy(wave.enemy);
+                yield return new WaitForSeconds(1f / wave.rate);
+            }
         }
 
         // the number of enemies to spawn each wave
         waveIndex++;
+
+        if(waveIndex >= waves.Length)
+        {
+
+        }
     }
 
     /// <summary>
@@ -102,5 +123,10 @@ public class EnemySpawner : Singleton<EnemySpawner>
         GameObject spawned = Instantiate(enemy, spawnPosition, Quaternion.identity);
         spawned.SetActive(true);
         EnemiesAlive++;
+    }
+
+    private void BuildNewWaves()
+    {
+
     }
 }

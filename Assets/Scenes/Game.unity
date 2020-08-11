@@ -742,9 +742,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1617838745efc19459a30c3fd8c644b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerPrefab: {fileID: 8657777607199562118, guid: 670ea10db7426fa41a29939fc3db7234, type: 3}
   livesLeft: 5
   round: 0
+  boughtTurret: {fileID: 0}
 --- !u!4 &286472156
 Transform:
   m_ObjectHideFlags: 0
@@ -3376,21 +3376,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-    count: 2
-    rate: 1
-  - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
-    count: 5
-    rate: 1
-  - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-    count: 10
-    rate: 0.8
-  - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-    count: 13
-    rate: 0.75
-  - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-    count: 17
-    rate: 0.6
+  - subWaves:
+    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
+      count: 3
+      rate: 1
+    - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
+      count: 2
+      rate: 2
+  - subWaves: []
+  - subWaves: []
+  - subWaves: []
+  - subWaves: []
+  endless: 1
   timeBetweenWaves: 2
 --- !u!4 &1688651835
 Transform:

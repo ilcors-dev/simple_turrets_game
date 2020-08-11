@@ -6,17 +6,7 @@ using UnityEngine;
 public class Wave
 {
     /// <summary>
-    /// The enemy that will get spawned this wave
+    /// The sub-waves to spawn in each wave
     /// </summary>
-    public GameObject enemy;
-
-    /// <summary>
-    /// Enemies to spawn
-    /// </summary>
-    public int count;
-
-    /// <summary>
-    /// Spawn rate of the wave enemies
-    /// </summary>
-    public float rate;
+    public SubWave[] subWaves;
 }
