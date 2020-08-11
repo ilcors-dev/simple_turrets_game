@@ -5148,6 +5148,7 @@ MonoBehaviour:
   healthText: {fileID: 5460618760130463195}
   deathAnimation: {fileID: 385239722}
   worthCoinValue: 5
+  worthLiveValue: 1
 --- !u!114 &7870740951349856573
 MonoBehaviour:
   m_ObjectHideFlags: 0

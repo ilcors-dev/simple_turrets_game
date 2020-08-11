@@ -101,11 +101,11 @@ public class TileScript : MonoBehaviour
         {
             Instantiate(GameManager.Instance.boughtTurret, new Vector3(center.x, center.y, center.z - 1f), Quaternion.identity);
             transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+
+            // turret placed, set it to null
+            GameManager.Instance.boughtTurret = null;
         }
         occupiedTile = true;
-
-        // turret placed, set it to null
-        GameManager.Instance.boughtTurret = null;
     }
 
     /// <summary>

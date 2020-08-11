@@ -36,6 +36,12 @@ public class Enemy : MonoBehaviour
     [Tooltip("When killed the coins will be added based on the enemie's coin value")]
     public int worthCoinValue;
 
+    /// <summary>
+    /// The enemy lives worth value
+    /// </summary>
+    [Tooltip("How many lives the enemy decreases the round lives when it reaches the end of the path")]
+    public int worthLiveValue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +62,7 @@ public class Enemy : MonoBehaviour
         // TODO: decrement player live / end game
         if (collision.CompareTag("DeathWall"))
         {
-            GameManager.Instance.DecrementLives();
+            GameManager.Instance.DecrementLives(worthLiveValue);
             EnemySpawner.EnemiesAlive--;
             Destroy(gameObject);
         }
