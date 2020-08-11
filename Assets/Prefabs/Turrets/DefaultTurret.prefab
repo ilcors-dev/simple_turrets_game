@@ -145,6 +145,7 @@ MonoBehaviour:
   critChance: 5
   critIncrease: 10
   price: 100
+  sellWorth: 15
   damageUpgradeIncrease: 13
   fireRateUpgradeIncrease: 12
   rangeUpgradeIncrease: 5
@@ -400,6 +401,22 @@ PrefabInstance:
     - target: {fileID: 2295255133810838715, guid: 90ea9821b2c76ca4489183fdd72e9beb, type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821016744415609644, guid: 90ea9821b2c76ca4489183fdd72e9beb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8657777607199562137}
+    - target: {fileID: 4821016744415609644, guid: 90ea9821b2c76ca4489183fdd72e9beb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Turret, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821016744415609644, guid: 90ea9821b2c76ca4489183fdd72e9beb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SellTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821016744415609644, guid: 90ea9821b2c76ca4489183fdd72e9beb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5596371677122378816, guid: 90ea9821b2c76ca4489183fdd72e9beb, type: 3}
       propertyPath: m_textInfo.characterCount

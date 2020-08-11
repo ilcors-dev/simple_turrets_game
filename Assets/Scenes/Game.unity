@@ -3405,7 +3405,6 @@ MonoBehaviour:
     - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
       count: 20
       rate: 0.6
-  startSpawn: 0
   endless: 1
   timeBetweenWaves: 2
 --- !u!4 &1688651835

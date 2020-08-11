@@ -62,6 +62,13 @@ public class Turret : MonoBehaviour
     ///</summary>
     private int turretLevel = 1;
 
+    /// <summary>
+    /// The percentage that will determine the worth of the turret on selling
+    /// </summary>
+    [SerializeField]
+    [Tooltip("The percentage that will determine the worth of the turret on selling (%). The higher the less value the turret will have")]
+    private float sellWorth;
+
     [Header("Turret upgrade specs increment")]
     [SerializeField]
     [Tooltip("Damage increase on upgrade (%)")]
@@ -285,12 +292,18 @@ public class Turret : MonoBehaviour
         // not enough money to buy the upgrade
         if (GameManager.Instance.coins < upgradeCost)
         {
-            upgradeText.color = new Color32(252, 3, 36, 255);// show red color
+            upgradeText.color = new Color32(201, 201, 201, 255);// show red color
         }else// can buy
             upgradeText.color = new Color32(32, 231, 51, 255);// show green color
 
         // upgrade price
         upgradeText.SetText("Upgrade (" + upgradeCost + ")");
+
+        // upgrade button text
+        TextMeshProUGUI sellText = infos.transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        // upgrade price
+        sellText.SetText("Sell (" + CalculateSellValue() + ")");
     }
 
     /// <summary>
@@ -400,6 +413,9 @@ public class Turret : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, fireRange * 2 / 3);
     }
 
+    /// <summary>
+    /// Upgrades the turret based on the increments defined
+    /// </summary>
     public void UpgradeTurret()
     {
         if (GameManager.Instance.coins >= upgradeCost)
@@ -432,6 +448,24 @@ public class Turret : MonoBehaviour
             // update turret infos
             ShowTurretInfos();
         }
+    }
+
+    /// <summary>
+    /// Sells the turret giving back the player a part of the price of the turret
+    /// </summary>
+    public void SellTurret()
+    {
+        GameManager.Instance.UpdateBalance(CalculateSellValue());
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Calculates how much the turret is worth in coins
+    /// </summary>
+    /// <returns></returns>
+    private int CalculateSellValue()
+    {
+        return (price - (int)(price * ((sellWorth / 100f) - (turretLevel / 10f))));
     }
 
     /// <summary>
@@ -470,7 +504,7 @@ public class Turret : MonoBehaviour
     }
 
     /// <summary>
-    /// Calculates the percentage increment given a base and a percentage increase and returns the result as NEXT FLOAT
+    /// Calculates the percentage increment given a base and a percentage increase and returns the result as FLOAT
     /// </summary>
     /// <param name="nBase"></param>
     /// <param name="percentageIncrease"></param>
