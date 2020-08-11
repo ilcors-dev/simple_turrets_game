@@ -75,11 +75,11 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.UpdateTextBalance(coins);
     }
 
-    public void DecrementLives()
+    public void DecrementLives(int liveValue)
     {
-        livesLeft--;
+        livesLeft -= liveValue;
         UIManager.Instance.SetLivesText();
-        if (livesLeft == 0)
+        if (livesLeft <= 0)
         {
             EndGame();
         }

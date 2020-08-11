@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -57,7 +58,7 @@ public class UIManager : Singleton<UIManager>
     {
         deathMenuUI.SetActive(true);
 
-        deathMenuUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("Waves survived: blabla");
+        deathMenuUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("Waves survived: " + GameManager.Instance.round);
         deathMenuUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText("Cash earned: blabla");
     }
     
@@ -66,7 +67,7 @@ public class UIManager : Singleton<UIManager>
     /// </summary>
     public void SetLivesText()
     {
-        livesLeftUI.SetText("Lives left: " + GameManager.Instance.livesLeft);
+        livesLeftUI.SetText("Lives left: " + ((GameManager.Instance.livesLeft < 0) ? 0 : GameManager.Instance.livesLeft));
     }
 
     /// <summary>
@@ -84,5 +85,14 @@ public class UIManager : Singleton<UIManager>
     public void SetRoundIndexText()
     {
         roundIndexUI.SetText("Wave: " + GameManager.Instance.round.ToString());
+    }
+
+    /// <summary>
+    /// Reloads the level
+    /// </summary>
+    public void RetryLevel()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
     }
 }

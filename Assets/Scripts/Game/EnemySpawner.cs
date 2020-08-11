@@ -42,6 +42,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
     // Start is called before the first frame update
     void Start()
     {
+        EnemiesAlive = 0;
         countdown = timeBetweenWaves;
     }
 

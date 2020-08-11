@@ -3378,15 +3378,34 @@ MonoBehaviour:
   waves:
   - subWaves:
     - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 3
+      count: 6
       rate: 1
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
       count: 2
       rate: 2
-  - subWaves: []
-  - subWaves: []
-  - subWaves: []
-  - subWaves: []
+  - subWaves:
+    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 1
+      rate: 1
+    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
+      count: 3
+      rate: 0.9
+    - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
+      count: 8
+      rate: 1.3
+  - subWaves:
+    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 2
+      rate: 1.7
+  - subWaves:
+    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 4
+      rate: 1.5
+  - subWaves:
+    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
+      count: 20
+      rate: 0.6
+  startSpawn: 0
   endless: 1
   timeBetweenWaves: 2
 --- !u!4 &1688651835
@@ -4086,7 +4105,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2131074467}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 208274593}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: RetryLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2131074467
 MonoBehaviour:
   m_ObjectHideFlags: 0
