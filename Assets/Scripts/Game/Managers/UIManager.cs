@@ -18,6 +18,10 @@ public class UIManager : Singleton<UIManager>
     private GameObject deathMenuUI;
 
     [SerializeField]
+    ///<summary>The current round</summary>
+    private TextMeshProUGUI roundIndexUI;
+
+    [SerializeField]
     ///<summary>The next wave time countdown ui component</summary>
     private TextMeshProUGUI nextWaveTimerUI;
 
@@ -25,6 +29,7 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         SetLivesText();
+        SetRoundIndexText();
     }
 
     /// <summary>
@@ -71,5 +76,13 @@ public class UIManager : Singleton<UIManager>
     {
         string toDisplay = "Next wave: " + string.Format("{0:00.00}", timer);
         nextWaveTimerUI.SetText(toDisplay);
+    }
+
+    /// <summary>
+    /// Sets the current wave / round of the game
+    /// </summary>
+    public void SetRoundIndexText()
+    {
+        roundIndexUI.SetText("Wave: " + GameManager.Instance.round.ToString());
     }
 }

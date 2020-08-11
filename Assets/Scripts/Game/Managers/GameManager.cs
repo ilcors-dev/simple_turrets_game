@@ -37,7 +37,12 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// The current wave
     /// </summary>
-    public int round = 0;
+    public int round;
+
+    private void Start()
+    {
+        UpdateBalance(150);
+    }
 
     public GameObject TowerPrefab
     {
@@ -75,14 +80,17 @@ public class GameManager : Singleton<GameManager>
         }
     }
     
+    /// <summary>
+    /// Ends the game and show the death UI
+    /// </summary>
     private void EndGame()
     {
         Time.timeScale = 0;// freeze game and show death UI
         UIManager.Instance.ShowDeathUI();
     }
 
-    private void Start()
+    public void BuyTurret(int turretCost)
     {
-
+         UpdateBalance(-turretCost);
     }
 }

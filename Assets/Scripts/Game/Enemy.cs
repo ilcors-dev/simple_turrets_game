@@ -21,7 +21,14 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// The enemy helth text reference
     /// </summary>
-    TextMeshProUGUI healthText;
+    [SerializeField]
+    private TextMeshProUGUI healthText;
+
+    /// <summary>
+    /// The enemy death animation
+    /// </summary>
+    [SerializeField]
+    private GameObject deathAnimation;
 
     /// <summary>
     /// The enemy worth value
@@ -34,7 +41,6 @@ public class Enemy : MonoBehaviour
     {
         // init componenents
         body = GetComponent<Rigidbody2D>();
-        healthText = transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
         healthText.SetText(health.ToString());
     }
 
@@ -51,6 +57,7 @@ public class Enemy : MonoBehaviour
         if (collision.CompareTag("DeathWall"))
         {
             GameManager.Instance.DecrementLives();
+            EnemySpawner.EnemiesAlive--;
             Destroy(gameObject);
         }
     }
@@ -68,21 +75,30 @@ public class Enemy : MonoBehaviour
         // if health is <= 0 the enemy is death
         // start death animation
         if (health <= 0)
-        {
-            ShowDeathAnimation();
+            Die();
 
-            CoinPopup.Create(worthCoinValue);
+    }
 
-            // destroy the actual enemy,
-            // this does not cause any problem because the death animation we created
-            // is not a child of this gameobject but instead it got instantiate in the place where
-            // the gameobject health went below 0
-            Destroy(gameObject);
+    /// <summary>
+    /// Does stuff when the enemy health is <= 0.
+    /// Instantiates death effects and updates statistics.
+    /// </summary>
+    private void Die()
+    {
+        ShowDeathAnimation();
 
-            GameManager.Instance.UpdateBalance(worthCoinValue);
-            //GameManager.Instance.UpdateScore();
-        }
+        CoinPopup.Create(worthCoinValue);
 
+        EnemySpawner.EnemiesAlive--;
+
+        // destroy the actual enemy,
+        // this does not cause any problem because the death animation we created
+        // is not a child of this gameobject but instead it got instantiate in the place where
+        // the gameobject health went below 0
+        Destroy(gameObject);
+
+        GameManager.Instance.UpdateBalance(worthCoinValue);
+        //GameManager.Instance.UpdateScore();
     }
 
     /// <summary>
@@ -90,11 +106,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void ShowDeathAnimation()
     {
-        // get animation
-        GameObject animation = transform.GetChild(2).gameObject;
-
         // copy the death animation of the object
-        GameObject deathAnimation = Instantiate(animation, transform.position, Quaternion.identity);
+        GameObject deathAnimation = Instantiate(this.deathAnimation, transform.position, Quaternion.identity);
         deathAnimation.SetActive(true);
 
         // get its particle system which actually holds the animation stuff
