@@ -12,6 +12,7 @@ public class ShopItem : MonoBehaviour
     /// </summary>
     public void Buy()
     {
-        TurretShop.Instance.BuyTurret(buyableTurret, buyableTurret.GetComponent<Turret>().price);
+        if(GameManager.Instance.coins >= buyableTurret.GetComponent<Turret>().price)
+            TurretShop.Instance.BuyTurret(buyableTurret, buyableTurret.GetComponent<Turret>().price);
     }
 }
