@@ -48,6 +48,11 @@ public class Turret : MonoBehaviour
     private float critIncrease;
 
     /// <summary>
+    /// The turret price
+    /// </summary>
+    public int price;
+
+    /// <summary>
     /// How many enemies the turret killed
     /// </summary>
     public int totalKilled { get; set; }

@@ -94,13 +94,18 @@ public class TileScript : MonoBehaviour
     /// </summary>
     private void PlaceTower()
     {
+        if (GameManager.Instance.boughtTurret == null)// no turret to place, return
+            return;
 
         if (!occupiedTile && !gameObject.CompareTag("Road"))
         {
-            Instantiate(GameManager.Instance.TowerPrefab, new Vector3(center.x, center.y, center.z - 1f), Quaternion.identity);
+            Instantiate(GameManager.Instance.boughtTurret, new Vector3(center.x, center.y, center.z - 1f), Quaternion.identity);
             transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
         }
         occupiedTile = true;
+
+        // turret placed, set it to null
+        GameManager.Instance.boughtTurret = null;
     }
 
     /// <summary>

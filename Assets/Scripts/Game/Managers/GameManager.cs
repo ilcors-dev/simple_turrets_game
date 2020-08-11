@@ -2,8 +2,8 @@
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField]
-    private GameObject towerPrefab;
+    //[SerializeField]
+    //private GameObject towerPrefab;
 
     /// <summary>
     /// The overall cash earned per wave
@@ -39,18 +39,23 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public int round;
 
+    /// <summary>
+    /// This will hold the turret when bought, on tap it will get instantiated on the scene
+    /// </summary>
+    public GameObject boughtTurret;
+
     private void Start()
     {
         UpdateBalance(150);
     }
 
-    public GameObject TowerPrefab
-    {
-        get
-        {
-            return towerPrefab;
-        }
-    }
+    //public GameObject TowerPrefab
+    //{
+    //    get
+    //    {
+    //        return towerPrefab;
+    //    }
+    //}
 
     /// <summary>
     /// Updates the overall cash game currency and the score text
@@ -87,10 +92,5 @@ public class GameManager : Singleton<GameManager>
     {
         Time.timeScale = 0;// freeze game and show death UI
         UIManager.Instance.ShowDeathUI();
-    }
-
-    public void BuyTurret(int turretCost)
-    {
-         UpdateBalance(-turretCost);
     }
 }
