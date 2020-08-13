@@ -1,51 +1,51 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+public abstract class Turret : MonoBehaviour
 {
     [Header("Turret specs")]
     /// <summary>
     /// turret damage
     /// </summary>
     [SerializeField]
-    private int damage = 1;
+    protected int damage = 1;
 
     /// <summary>
     /// firerate of the turret in seconds
     /// </summary>
     [SerializeField]
     [Tooltip("Fire every n seconds")]
-    private float fireRate;
+    protected float fireRate;
 
     /// <summary>
     /// Counter backwards, when 0 is reached then the turret will fire if a target is locked
     /// </summary>
-    private float fireCountdown = 0f;
+    protected float fireCountdown = 0f;
 
     /// <summary>
     /// range of the turret
     /// </summary>
     [SerializeField]
-    private float fireRange;
+    protected float fireRange;
 
     /// <summary>
     /// the range of the turret
     /// </summary>
-    SpriteRenderer range;
+    protected SpriteRenderer range;
 
     /// <summary>
     /// The turret chance to make a critical hit
     /// </summary>
     [SerializeField]
     [Tooltip("Critical chance (%)")]
-    private float critChance;
+    protected float critChance;
 
     /// <summary>
     /// How much will the turret damage be increased on a critical hit
     /// </summary>
     [SerializeField]
     [Tooltip("The increased damage of a critical hit (%)")]
-    private float critIncrease;
+    protected float critIncrease;
 
     /// <summary>
     /// The turret price
@@ -60,40 +60,40 @@ public class Turret : MonoBehaviour
     ///<summary>
     ///Turret current level
     ///</summary>
-    private int turretLevel = 1;
+    protected int turretLevel = 1;
 
     /// <summary>
     /// The percentage that will determine the worth of the turret on selling
     /// </summary>
     [SerializeField]
     [Tooltip("The percentage that will determine the worth of the turret on selling (%). The higher the less value the turret will have")]
-    private float sellWorth;
+    protected float sellWorth;
 
     [Header("Turret upgrade specs increment")]
     [SerializeField]
     [Tooltip("Damage increase on upgrade (%)")]
     ///<summary>Damage increase on upgrade</summary>
-    private int damageUpgradeIncrease;
+    protected int damageUpgradeIncrease;
 
     [SerializeField]
     [Tooltip("Firerate increase on upgrade (%)")]
     ///<summary>Firerate increase on upgrade</summary>
-    private int fireRateUpgradeIncrease;
+    protected int fireRateUpgradeIncrease;
 
     [SerializeField]
     [Tooltip("Range increase on upgrade (%)")]
     ///<summary>Range increase on upgrade</summary>
-    private float rangeUpgradeIncrease;
+    protected float rangeUpgradeIncrease;
 
     [SerializeField]
     [Tooltip("Critical chance increase on upgrade (%)")]
     ///<summary>Critical chance increase on upgrade</summary>
-    private float critChanceUpgradeIncrease;
+    protected float critChanceUpgradeIncrease;
 
     [SerializeField]
     [Tooltip("Critical damage increase on upgrade (%)")]
     ///<summary>Critical damage increase on upgrade</summary>
-    private float critDamageUpgradeIncrease;
+    protected float critDamageUpgradeIncrease;
 
     [Header("The upgrade of the turret economy")]
     [SerializeField]
@@ -101,103 +101,40 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// How much each upgrade will cost
     /// </summary>
-    private int upgradeCost;
+    protected int upgradeCost;
 
     [SerializeField]
     [Tooltip("How much the upgrade cost of the turret will increase by (%)")]
     /// <summary>
     /// How much the upgrade cost of the turret will increase
     /// </summary>
-    private int upgradeCostIncrease;
+    protected int upgradeCostIncrease;
 
-
-    [Header("Turret prefabs")]
-    /// <summary>
-    /// The bullet that gets instantiated
-    /// </summary>
-    public GameObject bulletPrefab;
 
     /// <summary>
     /// The turret locked target
     /// </summary>
-    private Transform lockedTarget { get; set; }
+    protected Transform lockedTarget { get; set; }
 
-    /// <summary>
-    /// The animation shown when shooting
-    /// </summary>
-    public GameObject shootAnimation;
-
+    [Header("Turret prefabs")]
     /// <summary>
     /// The turret info UI components
     /// </summary>
     [SerializeField]
-    private GameObject turretInfoPrefab;
-
-    /// <summary>
-    /// If the turret infos are shown
-    /// </summary>
-    private GameObject turretInfosUI;
+    protected GameObject turretInfosUI;
 
     /// <summary>
     /// Turret shoot audio
     /// </summary>
-    private AudioSource audio;
+    protected AudioSource audio;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        InvokeRepeating("AcquireTarget", 0f, 0.2f);
-        //inRange = new HashSet<GameObject>();
-        range = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        shootAnimation = gameObject.transform.GetChild(2).gameObject;
 
-        // draw turret range
-        DrawRange();
-
-        // get turret infos gui
-        turretInfosUI = transform.GetChild(3).gameObject;
-
-        // get audio source
-        audio = GetComponent<AudioSource>();
-
-        turretLevel = 1;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // if no target is acquired, return
-        if (lockedTarget == null)
-        {
-            return;
-        }
-
-        // always rotate towards target if the enemy is locked
-        RotateTorwardsTarget();
-
-        // if the countdown is <= 0 it's time to shoot
-        if (fireCountdown <= 0f)
-        {
-            Shoot(lockedTarget);
-
-            fireCountdown = 1f / fireRate;
-        }
-
-        // decrement the fireCountdown
-        fireCountdown -= Time.deltaTime;
-
-        // update turret infos if open each frame
-        if (turretInfosUI.activeSelf)
-        {
-            UpdateInfos();
-            UpdateUpgradePreviewInfos();
-        }
-    }
+    public bool isSilenced;
 
     /// <summary>
     /// Acquires the nearest enemy and locks it.
     /// </summary>
-    private void AcquireTarget()
+    protected void AcquireTarget()
     {
         // get all the enemies in the field
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -234,7 +171,7 @@ public class Turret : MonoBehaviour
         else lockedTarget = null;// nearest enemy is not in range or no enemies at all found
     }
 
-    private void OnMouseDown()
+    protected void OnMouseDown()
     {
         EnableDisableInfos();
         EnableDisableRange();
@@ -243,7 +180,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// Shows / Deletes turret infos UI
     /// </summary>
-    private void EnableDisableInfos()
+    protected void EnableDisableInfos()
     {
         // if another turret infos are shown, close them to let this turret infos open
         if (GameManager.Instance.shownTurretInfos != null && !turretInfosUI.Equals(GameManager.Instance.shownTurretInfos))
@@ -309,7 +246,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// Enables/disables the turret range indicator
     /// </summary>
-    private void EnableDisableRange()
+    protected void EnableDisableRange()
     {
         // show just one range indicator
         if (GameManager.Instance.shownRange != null && !range.Equals(GameManager.Instance.shownRange))
@@ -325,46 +262,10 @@ public class Turret : MonoBehaviour
     }
 
     /// <summary>
-    /// Shoots a bullet to a target enemy with a certain firerate.
-    /// </summary>
-    /// <param name="enemy">GameObject</param>
-    /// <returns></returns>
-    public void Shoot(Transform enemy)
-    {
-        audio.Play();
-
-        if (IsCritDamage())
-        {
-            // create new bullet with critical applied
-            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, damage + IncreaseByPercentageInt(damage, critIncrease), true);
-        }
-        else
-            // create new bullet
-            Bullet.Create(bulletPrefab, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, enemy.position.z), enemy.transform, this, damage, false);
-
-        // show shoot animation of the turret
-        GameObject shootExplosion = Instantiate(shootAnimation, new Vector3(shootAnimation.transform.position.x, shootAnimation.transform.position.y, -5f), Quaternion.identity);
-        //shootExplosion.transform.LookAt(enemy.transform);
-        shootExplosion.SetActive(true);
-
-        // get its particle system which actually holds the particle stuff
-        ParticleSystem animation = shootExplosion.GetComponentInChildren<ParticleSystem>();
-
-        // calculate the animation duration
-        float animationDuration = animation.main.duration + animation.main.startLifetime.constant;
-
-        // start the animation
-        animation.Play();
-
-        // destroy it after the animation finished
-        Destroy(shootExplosion, animationDuration);
-    }
-
-    /// <summary>
     /// Determines if the damage to deal will be a critical one based on the turret crit chance.
     /// </summary>
     /// <returns>True if the damage will be critical, False otherwise</returns>
-    private bool IsCritDamage()
+    protected bool IsCritDamage()
     {
         float randValue = Random.value;// returns number from 0f to 1f
         if (randValue < critChance / 100)// crit chance 5 means cause of the return from random above 0.05
@@ -376,7 +277,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// Rotates the turret towards the locked target.
     /// </summary>
-    private void RotateTorwardsTarget()
+    protected void RotateTorwardsTarget()
     {
         ////find the vector pointing from our position to the target
         Vector3 targetDirection = lockedTarget.transform.position - transform.position;
@@ -394,7 +295,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// Draws the range of the turret
     /// </summary>
-    private void DrawRange()
+    protected void DrawRange()
     {
         // dunno why, but the actual radius of the turret seems to be the 2/3 of the actual set radius
         // the turret will also detect an enemy in this range and not in the actual set one..
@@ -405,7 +306,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// Shows the range of the turret
     /// </summary>
-    private void OnDrawGizmos()
+    protected void OnDrawGizmos()
     {
         // dunno why, but the actual radius of the turret seems to be the 2/3 of the actual set radius
         // the turret will also detect an enemy in this range and not in the actual set one..
@@ -463,7 +364,7 @@ public class Turret : MonoBehaviour
     /// Calculates how much the turret is worth in coins
     /// </summary>
     /// <returns></returns>
-    private int CalculateSellValue()
+    protected int CalculateSellValue()
     {
         return (price - (int)(price * ((sellWorth / 100f) - (turretLevel / 10f))));
     }
@@ -498,7 +399,7 @@ public class Turret : MonoBehaviour
     /// <param name="nBase"></param>
     /// <param name="percentageIncrease"></param>
     /// <returns>Rounds to next INTEGER</returns>
-    private int IncreaseByPercentageInt(int nBase, float percentageIncrease)
+    protected int IncreaseByPercentageInt(int nBase, float percentageIncrease)
     {
         return Mathf.CeilToInt(nBase * (percentageIncrease / 100));
     }
@@ -509,7 +410,7 @@ public class Turret : MonoBehaviour
     /// <param name="nBase"></param>
     /// <param name="percentageIncrease"></param>
     /// <returns>Rounds to next FLOAT</returns>
-    private float IncreaseByPercentageFloat(float nBase, float percentageIncrease)
+    protected float IncreaseByPercentageFloat(float nBase, float percentageIncrease)
     {
         return nBase * (percentageIncrease / 100);
     }
@@ -517,7 +418,7 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// Shows turret infos
     /// </summary>
-    private void ShowTurretInfos()
+    protected void ShowTurretInfos()
     {
         // update the turret infos
         UpdateInfos();
@@ -526,4 +427,9 @@ public class Turret : MonoBehaviour
         // show turret range
         DrawRange();
     }
+
+    /// <summary>
+    /// Every turret must have a shoot method
+    /// </summary>
+    public abstract void Shoot(Transform enemy);
 }
