@@ -110,8 +110,8 @@ GameObject:
   - component: {fileID: 1497153820298299604}
   - component: {fileID: 1497153820298299563}
   - component: {fileID: 1497153820298299562}
-  - component: {fileID: 1497153820298299560}
   - component: {fileID: 8790050408032973202}
+  - component: {fileID: 1497153820298299560}
   - component: {fileID: 2978712744682177906}
   m_Layer: 9
   m_Name: SilenceEnemy
@@ -208,19 +208,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &1497153820298299560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497153820298299607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9011c17a789208c40a3e6b4abc20eda4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 0.5
 --- !u!61 &8790050408032973202
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -247,6 +234,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.36337483, y: 0.39761364}
   m_EdgeRadius: 0
+--- !u!114 &1497153820298299560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497153820298299607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9011c17a789208c40a3e6b4abc20eda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 0.5
 --- !u!114 &2978712744682177906
 MonoBehaviour:
   m_ObjectHideFlags: 0

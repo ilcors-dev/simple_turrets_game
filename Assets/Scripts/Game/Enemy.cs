@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     /// <summary>
     /// Rigidbody2d reference
@@ -42,7 +42,14 @@ public abstract class Enemy : MonoBehaviour
     [Tooltip("How many lives the enemy decreases the round lives when it reaches the end of the path")]
     public int worthLiveValue;
 
-    // Update is called once per frame
+    void Start()
+    {
+        // init componenents
+        body = GetComponent<Rigidbody2D>();
+        healthText.SetText(health.ToString());
+    }
+
+        // Update is called once per frame
     void Update()
     {
         //body.velocity = new Vector2(body.velocity.x + 0.001f, 0);

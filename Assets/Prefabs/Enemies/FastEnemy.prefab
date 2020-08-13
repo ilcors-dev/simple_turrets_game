@@ -110,9 +110,9 @@ GameObject:
   - component: {fileID: 1999816022196071618}
   - component: {fileID: 1999816022196071613}
   - component: {fileID: 1999816022196071612}
-  - component: {fileID: 1999816022196071619}
   - component: {fileID: 1999816022196071614}
   - component: {fileID: 8573370596485453188}
+  - component: {fileID: 4454245755200354432}
   m_Layer: 9
   m_Name: FastEnemy
   m_TagString: Enemy
@@ -208,23 +208,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &1999816022196071619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999816022196071617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e49ca10b99ec2f4eb56ca6a67e505f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 15
-  healthText: {fileID: 4409790354872377432}
-  deathAnimation: {fileID: 8573370595516084009}
-  worthCoinValue: 13
-  worthLiveValue: 1
 --- !u!114 &1999816022196071614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +247,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.13, y: 0.13}
   m_EdgeRadius: 0
+--- !u!114 &4454245755200354432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999816022196071617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e49ca10b99ec2f4eb56ca6a67e505f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 230
+  healthText: {fileID: 4409790354872377432}
+  deathAnimation: {fileID: 8573370595516084009}
+  worthCoinValue: 17
+  worthLiveValue: 2
 --- !u!1 &8573370595516084009
 GameObject:
   m_ObjectHideFlags: 0

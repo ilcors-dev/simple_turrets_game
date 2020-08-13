@@ -2994,11 +2994,11 @@ MonoBehaviour:
   waves:
   - subWaves:
     - enemy: {fileID: 1497153820298299607, guid: 500b4acb8571eac40baaa2ef218f893b, type: 3}
-      count: 5
+      count: 1
       rate: 0.2
-    - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
+    - enemy: {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
       count: 2
-      rate: 0.5
+      rate: 4
   - subWaves:
     - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
       count: 1

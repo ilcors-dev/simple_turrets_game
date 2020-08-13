@@ -23,7 +23,7 @@ public class SilencerEnemy : Enemy
     private GameObject silencedPrefab;
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         // init componenents
         body = GetComponent<Rigidbody2D>();
