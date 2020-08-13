@@ -4,8 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("Popups")]
+
+    [SerializeField]
+    public GameObject textPopupPrefab;
+
+    [SerializeField]
     public GameObject coinPopupPrefab;
 
+    [Header("Text UI components")]
     [SerializeField]
     ///<summary>The coin balance ui component</summary>
     private TextMeshProUGUI coinBalanceUI;

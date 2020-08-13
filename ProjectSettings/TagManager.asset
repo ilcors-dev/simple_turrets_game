@@ -18,6 +18,8 @@ TagManager:
   - CoinBalance
   - CoinPopup
   - NextWaveTimer
+  - Barrier
+  - SilencedIcon
   layers:
   - Default
   - TransparentFX

@@ -1,12 +1,12 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     /// <summary>
     /// Rigidbody2d reference
     /// </summary>
-    private Rigidbody2D body;
+    protected Rigidbody2D body;
 
     /// <summary>
     /// Health of the enemy, seriazable field
@@ -16,19 +16,19 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Is enemy death?
     /// </summary>
-    private bool death;
+    protected bool death;
 
     /// <summary>
     /// The enemy helth text reference
     /// </summary>
     [SerializeField]
-    private TextMeshProUGUI healthText;
+    protected TextMeshProUGUI healthText;
 
     /// <summary>
     /// The enemy death animation
     /// </summary>
     [SerializeField]
-    private GameObject deathAnimation;
+    protected GameObject deathAnimation;
 
     /// <summary>
     /// The enemy worth value
@@ -42,21 +42,13 @@ public class Enemy : MonoBehaviour
     [Tooltip("How many lives the enemy decreases the round lives when it reaches the end of the path")]
     public int worthLiveValue;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // init componenents
-        body = GetComponent<Rigidbody2D>();
-        healthText.SetText(health.ToString());
-    }
-
     // Update is called once per frame
     void Update()
     {
         //body.velocity = new Vector2(body.velocity.x + 0.001f, 0);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         // if the collision is the death wall, destroy enemy
         // TODO: decrement player live / end game
@@ -89,7 +81,7 @@ public class Enemy : MonoBehaviour
     /// Does stuff when the enemy health is <= 0.
     /// Instantiates death effects and updates statistics.
     /// </summary>
-    private void Die()
+    protected void Die()
     {
         ShowDeathAnimation();
 
@@ -110,10 +102,10 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Shows the death animation of the turret
     /// </summary>
-    private void ShowDeathAnimation()
+    protected void ShowDeathAnimation()
     {
         // copy the death animation of the object
-        GameObject deathAnimation = Instantiate(this.deathAnimation, transform.position, Quaternion.identity);
+        GameObject deathAnimation = Instantiate(this.deathAnimation, new Vector3(transform.position.x, transform.position.y, -10f), Quaternion.identity);
         deathAnimation.SetActive(true);
 
         // get its particle system which actually holds the animation stuff

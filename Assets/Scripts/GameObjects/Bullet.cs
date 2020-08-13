@@ -130,5 +130,16 @@ public class Bullet : MonoBehaviour
             enemy.DealDamage(damage);
             Destroy(gameObject);
         }
+        // if bullet hits the barrier of an enemy, destroy the bullet and deal damage to the barrier enemy
+        if (collision.gameObject.CompareTag("Barrier"))
+        {
+            BarrierEnemy enemy = collision.gameObject.GetComponent<BarrierEnemy>();
+
+            // create damage info
+            DamagePopup.Create(collision.transform.position, damage, isCriticalDamage);
+
+            enemy.DamageBarrier(damage);
+            Destroy(gameObject);
+        }
     }
 }

@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c17cec67308b1c4aa6346c66e53cba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textPopupPrefab: {fileID: 8907242630003325269, guid: 18e11ffc47627b74e8b2428d3e2bdb03, type: 3}
   coinPopupPrefab: {fileID: 4266256745076300527, guid: df1b3c767d06a934cba8632191b88fc6, type: 3}
   coinBalanceUI: {fileID: 1358407927}
   livesLeftUI: {fileID: 1827917193}
@@ -2992,12 +2993,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - subWaves:
-    - enemy: {fileID: 140484866842467738, guid: eebd8e2ae3c772847b7e851d464a1404, type: 3}
+    - enemy: {fileID: 1497153820298299607, guid: 500b4acb8571eac40baaa2ef218f893b, type: 3}
       count: 5
-      rate: 1
+      rate: 0.2
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
       count: 2
-      rate: 2
+      rate: 0.5
   - subWaves:
     - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
       count: 1
