@@ -46,7 +46,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        UpdateBalance(150);
+        UpdateBalance(200);
     }
 
     //public GameObject TowerPrefab

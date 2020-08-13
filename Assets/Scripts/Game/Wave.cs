@@ -9,4 +9,9 @@ public class Wave
     /// The sub-waves to spawn in each wave
     /// </summary>
     public SubWave[] subWaves;
+
+    public Wave(SubWave[] sub)
+    {
+        subWaves = sub;
+    }
 }

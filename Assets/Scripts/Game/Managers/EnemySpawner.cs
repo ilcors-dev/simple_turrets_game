@@ -133,9 +133,9 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
     private void BuildNewWaves()
     {
+        SubWave[] toCopy = waves[waves.Count - 1].subWaves;
 
-        SubWave s = new SubWave(10, .5f);
-        
+        SubWave[] newWaves;
     }
     
     /// <summary>

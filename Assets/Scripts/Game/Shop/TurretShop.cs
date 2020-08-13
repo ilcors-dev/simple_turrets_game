@@ -73,7 +73,7 @@ public class TurretShop : Singleton<TurretShop>
         {
             // get the ui cost text
             TextMeshProUGUI cost = item.Value.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            if (item.Key.buyableTurret.GetComponent<Turret>().price < GameManager.Instance.coins)
+            if (item.Key.buyableTurret.GetComponent<Turret>().price <= GameManager.Instance.coins)
                 cost.color = new Color32(32, 231, 51, 255);// show green color
             else
                 cost.color = new Color32(186, 190, 9, 255);// show green color
