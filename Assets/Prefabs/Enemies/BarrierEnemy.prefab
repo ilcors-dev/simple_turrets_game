@@ -137,7 +137,7 @@ MonoBehaviour:
   health: 300
   healthText: {fileID: 2810638525346320643}
   deathAnimation: {fileID: 6728401480224421664, guid: 5f4d52d2f92028f4bbff17eb99183830, type: 3}
-  worthCoinValue: 100
+  worthCoinValue: 75
   worthLiveValue: 2
   barrier: {fileID: 531163322857167486}
   barrierHealth: 300

@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class TileScript : MonoBehaviour
 {
@@ -23,7 +24,25 @@ public class TileScript : MonoBehaviour
     /// <summary>
     /// Signals if the tile is occupied by a turrett or not
     /// </summary>
-    private bool occupiedTile = false;
+    public bool occupiedTile = false;
+
+    [Header("Invalidate tile")]
+    /// <summary>
+    /// If the tile is invalidated no turrets can be placed on it
+    /// </summary>
+    [SerializeField]
+    private bool isInvalidated;
+
+    /// <summary>
+    /// The invalid tile sprite to replace when the tile gets invalid
+    /// </summary>
+    [SerializeField]
+    private Sprite invalidTile;
+
+    /// <summary>
+    /// Will hold the standard tile sprite to replace it when the tile gets re-validated
+    /// </summary>
+    private Sprite oldSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +70,7 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (isInvalidated) return;
         // show only if turrets info are not show
         if (GameManager.Instance.shownTurretInfos == null && GameManager.Instance.livesLeft != 0)
             if (transform.childCount > 0 && !occupiedTile)
@@ -94,7 +114,7 @@ public class TileScript : MonoBehaviour
     /// </summary>
     private void PlaceTower()
     {
-        if (GameManager.Instance.boughtTurret == null)// no turret to place, return
+        if (GameManager.Instance.boughtTurret == null || isInvalidated)// no turret to place, return
             return;
 
         if (!occupiedTile && !gameObject.CompareTag("Road"))
@@ -119,5 +139,19 @@ public class TileScript : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
+    }
+
+    /// <summary>
+    /// Invalidates the tile.
+    /// When the tile is invalidated, no turrets can be placed on it
+    /// </summary>
+    public void InvalidateTile()
+    {
+        isInvalidated = true;
+
+        SpriteRenderer gameObjectSprite = gameObject.GetComponent<SpriteRenderer>();
+
+        oldSprite = gameObjectSprite.sprite;
+        gameObjectSprite.sprite = invalidTile;
     }
 }

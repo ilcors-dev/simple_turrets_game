@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  fireRate: 1
+  fireRate: 1.5
   fireRange: 1.5
   critChance: 15
   critIncrease: 30
@@ -813,7 +813,8 @@ PrefabInstance:
       propertyPath: InitialModule.rotation3D
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6846594368780576828, guid: 2e5af2ae739387a4cbce40ae5da1d0f8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2e5af2ae739387a4cbce40ae5da1d0f8, type: 3}
 --- !u!1 &1126497704734221185 stripped
 GameObject:

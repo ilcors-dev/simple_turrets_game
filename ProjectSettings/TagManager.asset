@@ -20,6 +20,8 @@ TagManager:
   - NextWaveTimer
   - Barrier
   - SilencedIcon
+  - MapTile
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

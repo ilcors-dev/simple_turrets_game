@@ -10218,15 +10218,15 @@ MonoBehaviour:
   fireRate: 6
   fireRange: 2
   critChance: 15
-  critIncrease: 1
-  price: 1
-  sellWorth: 1
+  critIncrease: 50
+  price: 200
+  sellWorth: 25
   damageUpgradeIncrease: 10
   fireRateUpgradeIncrease: 22
   rangeUpgradeIncrease: 22
   critChanceUpgradeIncrease: 22
   critDamageUpgradeIncrease: 22
-  upgradeCost: 22
+  upgradeCost: 150
   upgradeCostIncrease: 22
   turretInfosUI: {fileID: 8993745971107148343}
   isSilenced: 0

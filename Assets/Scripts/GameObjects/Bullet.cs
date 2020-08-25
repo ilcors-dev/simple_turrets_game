@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
     /// <param name="parent">The parent turret script of the bullet</param>
     /// <param name="damage">The damage the bullet will deal to the enemy</param>
     /// <param name="isCriticalDamage">If the bullet will deal critical damage</param>
-    private void Setup(Transform target, Turret parent, int damage, bool isCriticalDamage)
+    protected void Setup(Transform target, Turret parent, int damage, bool isCriticalDamage)
     {
         // assign target to the bullet
         lockedTarget = true;
@@ -56,31 +56,31 @@ public class Bullet : MonoBehaviour
     /// <summary>
     ///      the final bullet speed between the bullet and the target
     /// </summary>
-    private float finalSpeed;
+    protected float finalSpeed;
 
     /// <summary>
     /// The damage of the bullet
     /// </summary>
-    private int damage { set; get; }
+    protected int damage { set; get; }
 
     // is target locked?
     // if so the bullet won't update its target enemy
-    private bool lockedTarget { set; get; }
+    protected bool lockedTarget { set; get; }
 
     /// <summary>
     /// The target enemy
     /// </summary>
-    private Transform target { set; get; }
+    protected Transform target { set; get; }
 
     /// <summary>
     /// Holds the reference of the turret that fired the bullet
     /// </summary>
-    private Turret shootBy;
+    protected Turret shootBy;
 
     /// <summary>
     /// Will the bullet damage be critical?
     /// </summary>
-    private bool isCriticalDamage;
+    protected bool isCriticalDamage;
 
     void Start()
     {
@@ -110,7 +110,7 @@ public class Bullet : MonoBehaviour
         lockedTarget = true;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         // if bullet hits the enemy, destroy the bullet and deal damage to enemy
         if (collision.gameObject.CompareTag("Enemy"))

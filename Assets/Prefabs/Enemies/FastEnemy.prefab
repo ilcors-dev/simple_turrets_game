@@ -258,10 +258,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e49ca10b99ec2f4eb56ca6a67e505f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 230
+  health: 150
   healthText: {fileID: 4409790354872377432}
   deathAnimation: {fileID: 224053673222959396, guid: 1a4e7eb7f79b0494c88c9a030496ffbd, type: 3}
-  worthCoinValue: 17
+  worthCoinValue: 24
   worthLiveValue: 2
 --- !u!1 &8786423379589899104
 GameObject:
