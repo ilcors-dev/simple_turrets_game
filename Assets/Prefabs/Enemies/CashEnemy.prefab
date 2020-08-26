@@ -118,14 +118,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 687121585981720550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e49ca10b99ec2f4eb56ca6a67e505f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ac8cc3c99a55334fabede6e74f8f10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1500
+  health: 500
   healthText: {fileID: 3421429034050685823}
   deathAnimation: {fileID: 8980448591841467882, guid: 2894e0a899567934897faffd0976e14b, type: 3}
-  worthCoinValue: 300
-  worthLiveValue: 1
+  worthCoinValue: 400
+  worthLiveValue: 3
+  tier: 2
 --- !u!114 &687121585981720473
 MonoBehaviour:
   m_ObjectHideFlags: 0

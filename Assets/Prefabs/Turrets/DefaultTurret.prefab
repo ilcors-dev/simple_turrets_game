@@ -251,20 +251,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7001041ddac86e48905bd30848741b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  fireRate: 1.5
+  damage: 15
+  fireRate: 1
   fireRange: 1.5
   critChance: 15
   critIncrease: 30
   price: 100
   sellWorth: 15
-  damageUpgradeIncrease: 20
-  fireRateUpgradeIncrease: 10
-  rangeUpgradeIncrease: 10
+  damageUpgradeIncrease: 23
+  fireRateUpgradeIncrease: 15
+  rangeUpgradeIncrease: 6
   critChanceUpgradeIncrease: 15
   critDamageUpgradeIncrease: 5
-  upgradeCost: 50
-  upgradeCostIncrease: 25
+  upgradeCost: 55
+  upgradeCostIncrease: 50
+  maxLevel: 5
   turretInfosUI: {fileID: 1588481896583085293}
   isSilenced: 0
   bulletPrefab: {fileID: 6447068709141545872, guid: 9df680e823dc06e45bcc13878245ed6a, type: 3}

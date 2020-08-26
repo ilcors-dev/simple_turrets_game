@@ -217,14 +217,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1160529914349089738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e49ca10b99ec2f4eb56ca6a67e505f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ac8cc3c99a55334fabede6e74f8f10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 200
   healthText: {fileID: 3956826977385643859}
-  deathAnimation: {fileID: 3045447493954095557, guid: b582921e905511d40913cb957e72b9d8, type: 3}
-  worthCoinValue: 60
-  worthLiveValue: 3
+  deathAnimation: {fileID: 7637823354711329190, guid: 9f734a5b28128aa4b980ad4e4be43131, type: 3}
+  worthCoinValue: 50
+  worthLiveValue: 2
+  tier: 2
 --- !u!114 &1160529914349089717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +252,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.00044184923, y: 0.016346753}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -262,7 +263,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.13, y: 0.13}
+  m_Size: {x: 0.19096863, y: 0.1839}
   m_EdgeRadius: 0
 --- !u!1 &3864135570484502246
 GameObject:

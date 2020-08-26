@@ -151,7 +151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &194016879
 GameObject:
@@ -272,11 +272,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208274592}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.3972626, y: 1.7113037, z: -1.2678916}
+  m_LocalPosition: {x: -2.2885318, y: 1.8027884, z: -2.9618459}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1471315959}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &235378332
 GameObject:
@@ -306,7 +306,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &277826670
 GameObject:
@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1617838745efc19459a30c3fd8c644b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesLeft: 5
+  livesLeft: 20
   round: 0
   boughtTurret: {fileID: 0}
 --- !u!4 &286472156
@@ -653,12 +653,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286472154}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.10873091, y: 0.091484666, z: -1.6939543}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1471315959}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &308101758
 GameObject:
@@ -1184,7 +1184,7 @@ RectTransform:
   - {fileID: 1827917192}
   - {fileID: 762715659}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1790,7 +1790,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &716937362
 GameObject:
@@ -2878,12 +2878,47 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415061504}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.10873091, y: 0.091484666, z: -1.6939543}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1471315959}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1471315958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1471315959}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1471315959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471315958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 208274594}
+  - {fileID: 286472156}
+  - {fileID: 1415061506}
+  - {fileID: 1947191236}
+  - {fileID: 1688651835}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1623085564
 GameObject:
@@ -2994,115 +3029,74 @@ MonoBehaviour:
   waves:
   - subWaves:
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-      count: 4
-      rate: 2
-    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
-      count: 1
-      rate: 3
-  - subWaves:
-    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
       count: 2
-      rate: 1
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 3
-      rate: 0.9
-    - enemy: {fileID: 1497153820298299607, guid: 500b4acb8571eac40baaa2ef218f893b, type: 3}
-      count: 1
-      rate: 1.3
-  - subWaves:
-    - enemy: {fileID: 140484866842467738, guid: eebd8e2ae3c772847b7e851d464a1404, type: 3}
-      count: 3
-      rate: 1
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 9
-      rate: 1.7
-    - enemy: {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
-      count: 3
-      rate: 4
-    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
-      count: 6
-      rate: 2
-  - subWaves:
-    - enemy: {fileID: 140484866842467738, guid: eebd8e2ae3c772847b7e851d464a1404, type: 3}
-      count: 5
-      rate: 3
-    - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-      count: 15
-      rate: 1.5
-    - enemy: {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
-      count: 3
-      rate: 6
-  - subWaves:
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 10
-      rate: 1.5
-    - enemy: {fileID: 6199930834443720009, guid: 5df02edfb02e2b747b3982906f1bc984, type: 3}
-      count: 2
-      rate: 0.6
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 2
-      rate: 0.6
-  - subWaves:
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 20
-      rate: 2
-    - enemy: {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
-      count: 8
-      rate: 3
-  - subWaves:
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 12
-      rate: 0.6
-    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
-      count: 8
-      rate: 0.8
-    - enemy: {fileID: 1497153820298299607, guid: 500b4acb8571eac40baaa2ef218f893b, type: 3}
-      count: 2
-      rate: 1
-    - enemy: {fileID: 140484866842467738, guid: eebd8e2ae3c772847b7e851d464a1404, type: 3}
-      count: 14
-      rate: 3
-  - subWaves:
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 3
       rate: 0.3
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-      count: 18
-      rate: 6
+      count: 2
+      rate: 0.5
+    waveDifficulty: 1
+  - subWaves:
+    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 2
+      rate: 0.1
+    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
+      count: 2
+      rate: 0.5
+    - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
+      count: 1
+      rate: 0.3
+    waveDifficulty: 1.5
+  - subWaves:
+    - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
+      count: 4
+      rate: 0.6
+    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
+      count: 5
+      rate: 1.3
+    - enemy: {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
+      count: 1
+      rate: 0.1
+    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 2
+      rate: 2
+    waveDifficulty: 1.7
+  - subWaves:
     - enemy: {fileID: 140484866842467738, guid: eebd8e2ae3c772847b7e851d464a1404, type: 3}
       count: 5
-      rate: 5
+      rate: 3
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-      count: 7
-      rate: 0.8
-    - enemy: {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
-      count: 7
-      rate: 0.8
+      count: 15
+      rate: 1.5
     - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 4
+      rate: 1
+    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 4
+      rate: 1
+    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
       count: 10
-      rate: 2
+      rate: 3
+    waveDifficulty: 2
   - subWaves:
     - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 15
-      rate: 0.6
-    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
-      count: 6
-      rate: 2
+      count: 10
+      rate: 4
+    - enemy: {fileID: 6199930834443720009, guid: 5df02edfb02e2b747b3982906f1bc984, type: 3}
+      count: 2
+      rate: 1.6
+    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
+      count: 10
+      rate: 1
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
-      count: 15
+      count: 22
+      rate: 1
+    - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+      count: 8
       rate: 1.7
-    - enemy: {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
-      count: 6
-      rate: 3.5
-  - subWaves:
-    - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
-      count: 20
-      rate: 0.6
-    - enemy: {fileID: 1497153820298299607, guid: 500b4acb8571eac40baaa2ef218f893b, type: 3}
-      count: 5
-      rate: 5
+    waveDifficulty: 2.2
   endless: 1
   timeBetweenWaves: 4
+  difficultyIncrement: 30
 --- !u!4 &1688651835
 Transform:
   m_ObjectHideFlags: 0
@@ -3110,12 +3104,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688651833}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.0405824, y: -2.7630634, z: -262.4242}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.9318514, y: -2.671579, z: -264.11813}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1471315959}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1821907430
 GameObject:
@@ -3447,12 +3441,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947191235}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3580273, y: -2.1616483, z: -11.573821}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.2492964, y: -2.0701637, z: -13.267776}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1471315959}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1947191237
 MonoBehaviour:

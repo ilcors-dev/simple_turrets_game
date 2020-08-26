@@ -271,14 +271,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7870740951349856578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e49ca10b99ec2f4eb56ca6a67e505f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ac8cc3c99a55334fabede6e74f8f10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 50
   healthText: {fileID: 5460618760130463195}
   deathAnimation: {fileID: 385239722}
-  worthCoinValue: 10
+  worthCoinValue: 30
   worthLiveValue: 1
+  tier: 1
 --- !u!114 &7870740951349856573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9011c17a789208c40a3e6b4abc20eda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  movementSpeed: 0.8
 --- !u!61 &1547628551
 BoxCollider2D:
   m_ObjectHideFlags: 0

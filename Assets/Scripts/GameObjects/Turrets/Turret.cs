@@ -11,10 +11,10 @@ public abstract class Turret : MonoBehaviour
     protected int damage = 1;
 
     /// <summary>
-    /// firerate of the turret in seconds
+    /// firerate of the turret in units per second
     /// </summary>
     [SerializeField]
-    [Tooltip("Fire every n seconds")]
+    [Tooltip("Fire every 1/firerate, the lower it is the lower the firerate will be")]
     protected float fireRate;
 
     /// <summary>
@@ -110,6 +110,12 @@ public abstract class Turret : MonoBehaviour
     /// </summary>
     protected int upgradeCostIncrease;
 
+    [SerializeField]
+    /// <summary>
+    /// The max level the turret can reach
+    /// </summary>
+    private int maxLevel;
+
 
     /// <summary>
     /// The turret locked target
@@ -128,7 +134,9 @@ public abstract class Turret : MonoBehaviour
     /// </summary>
     protected AudioSource audio;
 
-
+    /// <summary>
+    /// If the turret is silenced, if so it won't shoot
+    /// </summary>
     public bool isSilenced;
 
     /// <summary>
@@ -164,7 +172,7 @@ public abstract class Turret : MonoBehaviour
         // this prevents the script from locking a new target when the old one is still in range
         if (lockedTarget != null && Vector3.Distance(lockedTarget.transform.position, currentPos) < fireRange)
             return;
-        
+
         // if the nearest enemy is not null and its distance is in the turret range then we can lock the target
         if (nearestEnemy != null && shortestDistance <= fireRange)
             lockedTarget = nearestEnemy.transform;
@@ -226,21 +234,32 @@ public abstract class Turret : MonoBehaviour
         // upgrade button text
         TextMeshProUGUI upgradeText = infos.transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        // not enough money to buy the upgrade
-        if (GameManager.Instance.coins < upgradeCost)
+        // max level reached
+        if (turretLevel == maxLevel)
         {
-            upgradeText.color = new Color32(201, 201, 201, 255);// show red color
-        }else// can buy
-            upgradeText.color = new Color32(32, 231, 51, 255);// show green color
+            upgradeText.color = new Color32(201, 201, 201, 255);// show gray color
+                                                                // upgrade price
+            upgradeText.SetText("MAX");
+        }
+        else// max level not reached yet
+        {
+            // not enough money to buy the upgrade
+            if (GameManager.Instance.coins < upgradeCost)
+            {
+                upgradeText.color = new Color32(201, 201, 201, 255);// show gray color
+            }
+            else// can buy
+                upgradeText.color = new Color32(32, 231, 51, 255);// show green color
 
-        // upgrade price
-        upgradeText.SetText("Upgrade (" + upgradeCost + ")");
+            // upgrade price
+            upgradeText.SetText("Upgrade (" + upgradeCost + ")");
 
-        // upgrade button text
-        TextMeshProUGUI sellText = infos.transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>();
+            // upgrade button text
+            TextMeshProUGUI sellText = infos.transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        // upgrade price
-        sellText.SetText("Sell (" + CalculateSellValue() + ")");
+            // upgrade price
+            sellText.SetText("Sell (" + CalculateSellValue() + ")");
+        }
     }
 
     /// <summary>
@@ -319,6 +338,9 @@ public abstract class Turret : MonoBehaviour
     /// </summary>
     public void UpgradeTurret()
     {
+        // max level reached, return
+        if (turretLevel == maxLevel) return;
+
         if (GameManager.Instance.coins >= upgradeCost)
         {
             damage += IncreaseByPercentageInt(damage, damageUpgradeIncrease);
@@ -375,6 +397,29 @@ public abstract class Turret : MonoBehaviour
     public void UpdateUpgradePreviewInfos()
     {
         GameObject upgradeInfos = turretInfosUI.transform.GetChild(1).gameObject;
+        // max level reached
+        if (turretLevel == maxLevel)
+        {
+            // damage
+            upgradeInfos.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+            // fire rate
+            upgradeInfos.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+            // range
+            upgradeInfos.transform.GetChild(2).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+            // critical chance
+            if (critChance < 100)
+                upgradeInfos.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+            else
+                upgradeInfos.transform.GetChild(3).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+            // critical damage increase
+            if (critIncrease < 100)
+                upgradeInfos.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+            else
+                upgradeInfos.transform.GetChild(4).GetComponent<TextMeshProUGUI>().SetText(string.Empty);
+
+            return;
+        }
+
         // damage
         upgradeInfos.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("+" + IncreaseByPercentageInt(damage, damageUpgradeIncrease).ToString());
         // fire rate

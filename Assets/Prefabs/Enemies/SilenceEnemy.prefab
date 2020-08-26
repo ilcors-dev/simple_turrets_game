@@ -264,6 +264,7 @@ MonoBehaviour:
   deathAnimation: {fileID: 1706767169318354776, guid: 6bb83aeb95635cb4d9daa526ac6a43d4, type: 3}
   worthCoinValue: 200
   worthLiveValue: 2
+  tier: 3
   silenceEvery: 15
   silencedPrefab: {fileID: 7620513201759038488, guid: 35c1350a5b4c6ff4a953a6f19c61d918, type: 3}
 --- !u!1 &3566244443461988829

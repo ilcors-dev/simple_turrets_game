@@ -58,5 +58,7 @@ public class BarrierEnemy : Enemy
         gameObject.tag = "Enemy";
 
         healthText.transform.parent.gameObject.SetActive(true);
+
+        healthText.SetText(health.ToString());
     }
 }

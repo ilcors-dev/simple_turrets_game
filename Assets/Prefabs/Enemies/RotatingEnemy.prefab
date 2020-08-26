@@ -417,6 +417,7 @@ MonoBehaviour:
   deathAnimation: {fileID: 6762863428192165328, guid: 269721876768ca640a62fbdc9d2feaab, type: 3}
   worthCoinValue: 120
   worthLiveValue: 3
+  tier: 3
   skin: {fileID: 8336647951006739523}
   invalidateTileRange: 3
   repeatInvalidation: 6

@@ -8,11 +8,31 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected Rigidbody2D body;
 
+    [Header("The enemy specs")]
     /// <summary>
     /// Health of the enemy, seriazable field
     /// </summary>
     public int health;
 
+    /// <summary>
+    /// The enemy worth value
+    /// </summary>
+    [Tooltip("When killed the coins will be added based on the enemie's coin value")]
+    public int worthCoinValue;
+
+    /// <summary>
+    /// The enemy lives worth value
+    /// </summary>
+    [Tooltip("How many lives the enemy decreases the round lives when it reaches the end of the path")]
+    public int worthLiveValue;
+
+    [SerializeField]
+    /// <summary>
+    /// The enemy tier
+    /// </summary>
+    public int tier { get { return tier; } }
+
+    [Header("Prefabs")]
     /// <summary>
     /// Is enemy death?
     /// </summary>
@@ -29,18 +49,6 @@ public class Enemy : MonoBehaviour
     /// </summary>
     [SerializeField]
     protected GameObject deathAnimation;
-
-    /// <summary>
-    /// The enemy worth value
-    /// </summary>
-    [Tooltip("When killed the coins will be added based on the enemie's coin value")]
-    public int worthCoinValue;
-
-    /// <summary>
-    /// The enemy lives worth value
-    /// </summary>
-    [Tooltip("How many lives the enemy decreases the round lives when it reaches the end of the path")]
-    public int worthLiveValue;
 
     void Start()
     {

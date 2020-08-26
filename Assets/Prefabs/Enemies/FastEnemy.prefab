@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9011c17a789208c40a3e6b4abc20eda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3
+  movementSpeed: 2
 --- !u!61 &8573370596485453188
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -255,14 +255,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1999816022196071617}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e49ca10b99ec2f4eb56ca6a67e505f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ac8cc3c99a55334fabede6e74f8f10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 150
+  health: 30
   healthText: {fileID: 4409790354872377432}
   deathAnimation: {fileID: 224053673222959396, guid: 1a4e7eb7f79b0494c88c9a030496ffbd, type: 3}
-  worthCoinValue: 24
+  worthCoinValue: 40
   worthLiveValue: 2
+  tier: 1
 --- !u!1 &8786423379589899104
 GameObject:
   m_ObjectHideFlags: 0
