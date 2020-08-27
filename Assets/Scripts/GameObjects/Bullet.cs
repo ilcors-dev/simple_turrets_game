@@ -121,7 +121,7 @@ public class Bullet : MonoBehaviour
             DamagePopup.Create(collision.transform.position, damage, isCriticalDamage);
 
             // if the bullet will kill the enemy, increment the turret killed enemies attribute
-            if (enemy.health - damage <= 0)
+            if (enemy.Health - damage <= 0)
             {
                 shootBy.totalKilled++;
                 shootBy.UpdateInfos();

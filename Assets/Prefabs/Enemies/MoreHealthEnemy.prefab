@@ -221,11 +221,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 200
-  healthText: {fileID: 3956826977385643859}
-  deathAnimation: {fileID: 7637823354711329190, guid: 9f734a5b28128aa4b980ad4e4be43131, type: 3}
   worthCoinValue: 50
   worthLiveValue: 2
   tier: 2
+  healthText: {fileID: 3956826977385643859}
+  deathAnimation: {fileID: 7637823354711329190, guid: 9f734a5b28128aa4b980ad4e4be43131, type: 3}
 --- !u!114 &1160529914349089717
 MonoBehaviour:
   m_ObjectHideFlags: 0

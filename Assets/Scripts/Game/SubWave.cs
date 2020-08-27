@@ -18,10 +18,12 @@ public class SubWave
     /// <summary>
     /// Spawn rate of the wave enemies
     /// </summary>
+    [Tooltip("Spawn every 1/rate, the higher rate is the more enemies in less time will spawn")]
     public float rate;
 
-    public SubWave(int count, float rate)
+    public SubWave(GameObject enemy, int count, float rate)
     {
+        this.enemy = enemy;
         this.count = count;
         this.rate = rate;
     }

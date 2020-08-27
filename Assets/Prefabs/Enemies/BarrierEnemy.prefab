@@ -135,11 +135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 400
-  healthText: {fileID: 2810638525346320643}
-  deathAnimation: {fileID: 6728401480224421664, guid: 5f4d52d2f92028f4bbff17eb99183830, type: 3}
   worthCoinValue: 50
   worthLiveValue: 5
   tier: 2
+  healthText: {fileID: 2810638525346320643}
+  deathAnimation: {fileID: 6728401480224421664, guid: 5f4d52d2f92028f4bbff17eb99183830, type: 3}
   barrier: {fileID: 531163322857167486}
   barrierHealth: 500
   barrierText: {fileID: 7246870056022700270}

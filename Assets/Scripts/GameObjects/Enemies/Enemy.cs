@@ -9,34 +9,58 @@ public class Enemy : MonoBehaviour
     protected Rigidbody2D body;
 
     [Header("The enemy specs")]
+    [SerializeField]
     /// <summary>
     /// Health of the enemy, seriazable field
     /// </summary>
-    public int health;
+    protected int health;
+
+    // make it a property to not directly touch 'health' attribute
+    public int Health
+    {
+        get { return health; }
+        set { health = value; }
+    }
 
     /// <summary>
     /// The enemy worth value
     /// </summary>
     [Tooltip("When killed the coins will be added based on the enemie's coin value")]
-    public int worthCoinValue;
+    [SerializeField]
+    protected int worthCoinValue;
+
+    // make it a property to not directly touch 'health' attribute
+    public int WorthCoinValue
+    {
+        get { return worthCoinValue; }
+        set { worthCoinValue = value; }
+    }
 
     /// <summary>
     /// The enemy lives worth value
     /// </summary>
     [Tooltip("How many lives the enemy decreases the round lives when it reaches the end of the path")]
-    public int worthLiveValue;
+    [SerializeField]
+    protected int worthLiveValue;
+
+    // make it a property to not directly touch 'health' attribute
+    public int WorthLiveValue
+    {
+        get { return WorthLiveValue; }
+        set { WorthLiveValue = value; }
+    }
 
     [SerializeField]
     /// <summary>
     /// The enemy tier
     /// </summary>
-    public int tier { get { return tier; } }
+    public int tier;
 
     [Header("Prefabs")]
     /// <summary>
     /// Is enemy death?
     /// </summary>
-    protected bool death;
+    protected bool dead;
 
     /// <summary>
     /// The enemy helth text reference
@@ -54,10 +78,11 @@ public class Enemy : MonoBehaviour
     {
         // init componenents
         body = GetComponent<Rigidbody2D>();
+        dead = false;
         healthText.SetText(health.ToString());
     }
 
-        // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         //body.velocity = new Vector2(body.velocity.x + 0.001f, 0);
@@ -70,10 +95,11 @@ public class Enemy : MonoBehaviour
         if (collision.CompareTag("DeathWall"))
         {
             GameManager.Instance.DecrementLives(worthLiveValue);
-            EnemySpawner.EnemiesAlive--;
+            EnemySpawner.EnemiesAlive -= 1;
             Destroy(gameObject);
         }
     }
+
     /// <summary>
     /// Deals damage to the enemy.
     /// </summary>
@@ -87,8 +113,10 @@ public class Enemy : MonoBehaviour
 
         // if health is <= 0 the enemy is death
         // start death animation
-        if (health <= 0)
+        if (health <= 0 && !dead)
+        {
             Die();
+        }
 
     }
 
@@ -98,11 +126,14 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected void Die()
     {
+        dead = true;
         ShowDeathAnimation();
 
         CoinPopup.Create(worthCoinValue);
 
-        EnemySpawner.EnemiesAlive--;
+        EnemySpawner.EnemiesAlive -= 1;
+
+        Debug.Log(EnemySpawner.EnemiesAlive);
 
         // destroy the actual enemy,
         // this does not cause any problem because the death animation we created

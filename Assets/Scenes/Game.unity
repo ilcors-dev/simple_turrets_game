@@ -2563,8 +2563,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 717, y: -169}
-  m_SizeDelta: {x: 436.46167, y: 199.04065}
+  m_AnchoredPosition: {x: 681.68, y: -169}
+  m_SizeDelta: {x: 507.09888, y: 199.04065}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1358407927
 MonoBehaviour:
@@ -3035,6 +3035,7 @@ MonoBehaviour:
       count: 2
       rate: 0.5
     waveDifficulty: 1
+    finished: 0
   - subWaves:
     - enemy: {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
       count: 2
@@ -3046,6 +3047,7 @@ MonoBehaviour:
       count: 1
       rate: 0.3
     waveDifficulty: 1.5
+    finished: 0
   - subWaves:
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
       count: 4
@@ -3060,9 +3062,10 @@ MonoBehaviour:
       count: 2
       rate: 2
     waveDifficulty: 1.7
+    finished: 0
   - subWaves:
     - enemy: {fileID: 140484866842467738, guid: eebd8e2ae3c772847b7e851d464a1404, type: 3}
-      count: 5
+      count: 4
       rate: 3
     - enemy: {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
       count: 15
@@ -3077,6 +3080,7 @@ MonoBehaviour:
       count: 10
       rate: 3
     waveDifficulty: 2
+    finished: 0
   - subWaves:
     - enemy: {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
       count: 10
@@ -3094,9 +3098,18 @@ MonoBehaviour:
       count: 8
       rate: 1.7
     waveDifficulty: 2.2
+    finished: 0
   endless: 1
   timeBetweenWaves: 4
-  difficultyIncrement: 30
+  availableEnemies:
+  - {fileID: 140484866842467738, guid: eebd8e2ae3c772847b7e851d464a1404, type: 3}
+  - {fileID: 687121585981720550, guid: d24ffe92bc2ca004fb9172c50290c135, type: 3}
+  - {fileID: 7870740951349856578, guid: 553e30b9d2038eb43a229f569717586e, type: 3}
+  - {fileID: 1999816022196071617, guid: 93bd155ded59c5642adffaf565a7eb6e, type: 3}
+  - {fileID: 1160529914349089738, guid: f027c3b2d1c2dcf44b50dc87af8e9e04, type: 3}
+  - {fileID: 6199930834443720009, guid: 5df02edfb02e2b747b3982906f1bc984, type: 3}
+  - {fileID: 1497153820298299607, guid: 500b4acb8571eac40baaa2ef218f893b, type: 3}
+  difficultyIncrement: 20
 --- !u!4 &1688651835
 Transform:
   m_ObjectHideFlags: 0

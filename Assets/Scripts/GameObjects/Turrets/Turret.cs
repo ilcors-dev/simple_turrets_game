@@ -140,6 +140,11 @@ public abstract class Turret : MonoBehaviour
     public bool isSilenced;
 
     /// <summary>
+    /// The tile on which the turret is on
+    /// </summary>
+    public TileScript tile { get; set; }
+
+    /// <summary>
     /// Acquires the nearest enemy and locks it.
     /// </summary>
     protected void AcquireTarget()
@@ -379,6 +384,7 @@ public abstract class Turret : MonoBehaviour
     public void SellTurret()
     {
         GameManager.Instance.UpdateBalance(CalculateSellValue());
+        tile.occupiedTile = false;// the tile is now free and a new turret can be placed on it
         Destroy(gameObject);
     }
 
